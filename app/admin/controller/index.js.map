@@ -1,0 +1,16 @@
+{
+    "version": 3,
+    "sources": [
+        "..\\..\\..\\src\\admin\\controller\\index.js"
+    ],
+    "names": [
+        "indexAction",
+        "display",
+        "homeAction"
+    ],
+    "mappings": "AAAA;;;;;;;;;;;;;;;;AAEA;;;;;;;;;;;;;;AAGI;;;;qBAIAA,W,0BAAc;AACV;AACA,eAAO,KAAKC,OAAL,EAAP;AACH,K;;qBAEDC,U,yBAAa;AACT;AACA,eAAO,KAAKD,OAAL,EAAP;AACH,K",
+    "file": "..\\..\\..\\src\\admin\\controller\\index.js",
+    "sourcesContent": [
+        "'use strict';\n\nimport Base from './base.js';\n\nexport default class extends Base {\n    /**\n   * index action\n   * @return {Promise} []\n   */\n    indexAction() {\n        //auto render template file index/index.html\n        return this.display();\n    }\n\n    homeAction() {\n        //auto render template file index/home.html\n        return this.display();\n    }\n}\n"
+    ]
+}
