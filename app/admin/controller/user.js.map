@@ -1,0 +1,22 @@
+{
+    "version": 3,
+    "sources": [
+        "..\\..\\..\\src\\admin\\controller\\user.js"
+    ],
+    "names": [
+        "indexAction",
+        "display",
+        "viewAction",
+        "data",
+        "rows",
+        "id",
+        "username",
+        "total",
+        "success"
+    ],
+    "mappings": "AAAA;;;;;;;;;;;;;;;;AACA;;;;;;;;;;;;;;AAEI;;;;qBAIAA,W,0BAAc;AACV,eAAO,KAAKC,OAAL,EAAP;AACH,K;;qBAEDC,U,yBAAa;AACT,YAAIC,OAAO;AACPC,kBAAM,CACF;AACIC,oBAAI,CADR;AAEIC,0BAAU;AAFd,aADE,EAKF;AACID,oBAAI,CADR;AAEIC,0BAAU;AAFd,aALE,CADC;AA2CPC,mBAAO;AA3CA,SAAX;AA6CA,aAAKC,OAAL,CAAaL,IAAb;AACH,K",
+    "file": "..\\..\\..\\src\\admin\\controller\\user.js",
+    "sourcesContent": [
+        "'use strict';\nimport Base from './base.js';\nexport default class extends Base {\n    /**\n   * user action\n   * @return {Promise} []\n   */\n    indexAction() {\n        return this.display();\n    }\n\n    viewAction() {\n        let data = {\n            rows: [\n                {\n                    id: 1,\n                    username: 'xxx'\n                },\n                {\n                    id: 2,\n                    username: 'aaa'\n                },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // }\n            ],\n            total: 2\n        }\n        this.success(data);\n    }\n\n}\n"
+    ]
+}
