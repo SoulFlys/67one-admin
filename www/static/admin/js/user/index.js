@@ -24,25 +24,28 @@ require(['bootstrapTable','adminBase','bootstrapTableZnCn'], function(bootstrapT
             field: 'username',
             title: '用户名',
         }, {
-            field: 'name',
+            field: 'nickname',
+            title: '昵称',
+        }, {
+            field: 'realname',
             title: '真实姓名',
         }, {
-            field: 'contact',
-            title: '联系方式',
-        }, {
-            field: 'auth_group.0.title',
-            title: '角色名称',
+            field: 'avatar',
+            title: '头像',
         }, {
             field: 'status',
             title: '启用状态',
         }, {
-            field: 'create_time',
+            field: 'createip',
+            title: '创建IP',
+        },{
+            field: 'createtime',
             title: '创建时间',
+        },  {
+            field: 'lastloginip',
+            title: '最后登录IP',
         }, {
-            field: 'update_time',
-            title: '修改时间',
-        }, {
-            field: 'last_login_time',
+            field: 'lastlogintime',
             title: '最后登录时间',
         }, {
             field: 'operate',
@@ -108,7 +111,7 @@ require(['bootstrapTable','adminBase','bootstrapTableZnCn'], function(bootstrapT
         var $obj = $(this);
         layer.open({
             type: 2,
-            content: '/admin_user/add_edit_view',
+            content: '/admin/user/add',
             title: '新增管理员',
             shade: 0,
             area: ['800px','600px'],
@@ -231,9 +234,6 @@ require(['bootstrapTable','adminBase','bootstrapTableZnCn'], function(bootstrapT
             // '</a>',
             '<a class="edit btn btn-xs btn-default btn-outline" data-id=' + row.id + ' style="margin-left:5px" href="javascript:void(0)" title="编辑">',
             '<i class="glyphicon glyphicon-edit"></i>',
-            '</a>',
-            '<a class="assign btn btn-xs btn-default btn-outline" data-id=' + row.id + ' style="margin-left:5px" href="javascript:void(0)" title="查看">',
-            '<i class="fa fa-users"></i> 分配角色',
             '</a>',
             '<a class="status btn btn-xs '+b+' btn-outline" data-id=' + row.id + ' data-name=' + row.name + ' data-status="'+a+'" style="margin-left:5px" href="javascript:void(0)" title="删除">'+a+'</a>',
             '<a class="delete btn btn-xs btn-default btn-outline" data-id=' + row.id + ' data-name=' + row.name + ' style="margin-left:5px" href="javascript:void(0)" title="删除">',

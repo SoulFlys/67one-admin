@@ -2,6 +2,14 @@
 
 exports.__esModule = true;
 
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -32,23 +40,82 @@ var _class = function (_Base) {
     * user action
     * @return {Promise} []
     */
-    _class.prototype.indexAction = function indexAction() {
-        return this.display();
-    };
+    _class.prototype.indexAction = function () {
+        var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+            return _regenerator2.default.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            return _context.abrupt('return', this.display());
 
-    _class.prototype.viewAction = function viewAction() {
-        var data = {
-            rows: [{
-                id: 1,
-                username: 'xxx'
-            }, {
-                id: 2,
-                username: 'aaa'
-            }],
-            total: 2
-        };
-        this.success(data);
-    };
+                        case 1:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, this);
+        }));
+
+        function indexAction() {
+            return _ref.apply(this, arguments);
+        }
+
+        return indexAction;
+    }();
+
+    _class.prototype.viewAction = function () {
+        var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
+            var model, data;
+            return _regenerator2.default.wrap(function _callee2$(_context2) {
+                while (1) {
+                    switch (_context2.prev = _context2.next) {
+                        case 0:
+                            model = this.model("admin");
+                            _context2.next = 3;
+                            return model.select();
+
+                        case 3:
+                            data = _context2.sent;
+
+                            this.success(this.assginAjaxList(data));
+
+                        case 5:
+                        case 'end':
+                            return _context2.stop();
+                    }
+                }
+            }, _callee2, this);
+        }));
+
+        function viewAction() {
+            return _ref2.apply(this, arguments);
+        }
+
+        return viewAction;
+    }();
+
+    _class.prototype.addAction = function () {
+        var _ref3 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3() {
+            return _regenerator2.default.wrap(function _callee3$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            return _context3.abrupt('return', this.display());
+
+                        case 1:
+                        case 'end':
+                            return _context3.stop();
+                    }
+                }
+            }, _callee3, this);
+        }));
+
+        function addAction() {
+            return _ref3.apply(this, arguments);
+        }
+
+        return addAction;
+    }();
 
     return _class;
 }(_base2.default);

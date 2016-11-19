@@ -8,11 +8,11 @@ export default {
   adapter: {
     mysql: {
       host: '127.0.0.1',
-      port: '',
-      database: '',
-      user: '',
-      password: '',
-      prefix: '',
+      port: '3306',
+      database: 'hahaha',
+      user: 'root',
+      password: 'root',
+      prefix: 'blog_',
       encoding: 'utf8'
     },
     mongo: {

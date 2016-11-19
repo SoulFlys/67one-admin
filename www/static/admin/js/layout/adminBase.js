@@ -1,33 +1,55 @@
-define(['jquery','layer','bootstrap'],function($,layer){
+define([
+    'jquery', 'layer', 'bootstrap'
+], function($, layer) {
 
     /**
      * 初始化变量和方法
      */
-     var myinit = {
-         initVar: function(){
-             time_icon0 = {icon: 0,time: 2000};
-             time_icon1 = {icon: 1,time: 2000};
-             time_icon2 = {icon: 2,time: 2000};
-             time_icon3 = {icon: 3,time: 2000};
-             time_icon4 = {icon: 4,time: 2000};
-             time_icon5 = {icon: 5,time: 2000};
-             tips_icon1 = {
-                 tips: [1, '#f60'],
-                 time: 2000
-             };
-             validate_error = "<i class='fa fa-times-circle'></i> ";
-         },
-         initFunc: function(){
-             //validate_init();
-             //验证登录注册啊啥得
-         }
-     };
+    var myinit = {
+        initVar: function() {
+            time_icon0 = {
+                icon: 0,
+                time: 2000
+            };
+            time_icon1 = {
+                icon: 1,
+                time: 2000
+            };
+            time_icon2 = {
+                icon: 2,
+                time: 2000
+            };
+            time_icon3 = {
+                icon: 3,
+                time: 2000
+            };
+            time_icon4 = {
+                icon: 4,
+                time: 2000
+            };
+            time_icon5 = {
+                icon: 5,
+                time: 2000
+            };
+            tips_icon1 = {
+                tips: [
+                    1, '#f60'
+                ],
+                time: 2000
+            };
+            validate_error = "<i class='fa fa-times-circle'></i> ";
+        },
+        initFunc: function() {
+            //validate_init();
+            //验证登录注册啊啥得
+        }
+    };
 
     /**
      * 对外抛出初始化方法
      */
-    var init = function(callback){
-        $(document).ready(function(){
+    var init = function(callback) {
+        $(document).ready(function() {
             myinit.initVar();
             myinit.initFunc();
             callback();
@@ -37,13 +59,13 @@ define(['jquery','layer','bootstrap'],function($,layer){
     /**
      * 修改validate的默认提示样式
      */
-    var validate_init = function(){
+    var validate_init = function() {
         $.validator.setDefaults({
-            highlight: function (element) {
+            highlight: function(element) {
                 $(element).parent().find('input').nextAll('.Validform_checktip').removeClass('Validform_right');
                 $(element).parent().find('input').addClass('Validform_error');
             },
-            success: function (element) {
+            success: function(element) {
                 $(element).parent().find('input').nextAll('.Validform_checktip').addClass('Validform_right');
                 $(element).parent().find('input').removeClass('Validform_error');
             },
@@ -51,19 +73,19 @@ define(['jquery','layer','bootstrap'],function($,layer){
             errorClass: "Validform_checktip Validform_wrong",
             validClass: "validClass",
             pendingClass: 'pending',
-            errorPlacement : function(error, element) {
+            errorPlacement: function(error, element) {
                 error.appendTo(element.parent());
             },
-            onfocusout: function(element){
+            onfocusout: function(element) {
                 $(element).valid();
             }
         });
 
         $.validator.addMethod("isMobile", function(value, element) {
-    		var length = value.length;
-    		var mobile = /^1(3[0-9]|4[57]|5[0-35-9]|8[0-9]|7[6-8])\d{8}$/;
-    		return this.optional(element) || (length == 11 && mobile.test(value));
-    	}, "您输入的手机号码格式有误");
+            var length = value.length;
+            var mobile = /^1(3[0-9]|4[57]|5[0-35-9]|8[0-9]|7[6-8])\d{8}$/;
+            return this.optional(element) || (length == 11 && mobile.test(value));
+        }, "您输入的手机号码格式有误");
 
         $.validator.addMethod("isUsername", function(value, element) {
             var username = /^[a-zA-Z0-9]{6,16}$/;
@@ -71,9 +93,9 @@ define(['jquery','layer','bootstrap'],function($,layer){
         }, "请输入6-16位字母或数字");
 
         $.validator.addMethod("isPassword", function(value, element) {
-    		var password = /^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,20}$/;
-    		return this.optional(element) || password.test(value);
-    	}, "您输入的密码格式有误");
+            var password = /^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,20}$/;
+            return this.optional(element) || password.test(value);
+        }, "您输入的密码格式有误");
 
         $.validator.addMethod("isTel", function(value, element) {
             var length = value.length;
@@ -115,13 +137,16 @@ define(['jquery','layer','bootstrap'],function($,layer){
 
     };
 
-
     /**
      * ajax方法
      */
-    var _ajax = function(url,type,data,callback){
-        var beforeFn = arguments[4]===undefined ? false : arguments[4];
-        var completeFn = arguments[5]===undefined ? false : arguments[5];
+    var _ajax = function(url, type, data, callback) {
+        var beforeFn = arguments[4] === undefined
+            ? false
+            : arguments[4];
+        var completeFn = arguments[5] === undefined
+            ? false
+            : arguments[5];
         $.ajax({
             url: url,
             type: type,
@@ -136,14 +161,14 @@ define(['jquery','layer','bootstrap'],function($,layer){
                 return false;
             },
             //发送请求前
-            beforeSend: function(XMLHttpRequest){
-                if(beforeFn){
+            beforeSend: function(XMLHttpRequest) {
+                if (beforeFn) {
                     beforeFn(XMLHttpRequest);
                 }
             },
             //请求完成后回调函数 (请求成功或失败之后均调用)。
-            complete: function(XMLHttpRequest, textStatus){
-                if(completeFn){
+            complete: function(XMLHttpRequest, textStatus) {
+                if (completeFn) {
                     completeFn(XMLHttpRequest, textStatus);
                 }
             }
@@ -153,21 +178,21 @@ define(['jquery','layer','bootstrap'],function($,layer){
     /**
      * 滚动到当前dom节点
      */
-    var domScrollTop = function(obj,callback){
+    var domScrollTop = function(obj, callback) {
         $('html,body').animate({
-            scrollTop:obj.offset().top-100
-        },500,callback);
+            scrollTop: obj.offset().top - 100
+        }, 500, callback);
     };
 
     /**
      * 表单实例化之后的数据转换成对象
      * obj => $('form');
      */
-    var _serializeToObj = function(obj){
+    var _serializeToObj = function(obj) {
         var jsonObj = {},
             data = obj.serialize(),
             param = data.split("&");
-        for ( var i = 0; param !== null && i < param.length; i++) {
+        for (var i = 0; param !== null && i < param.length; i++) {
             var para = param[i].split("=");
             jsonObj[para[0]] = para[1];
         }
@@ -176,13 +201,8 @@ define(['jquery','layer','bootstrap'],function($,layer){
 
 
 
-     var ceshi = function(a){
-        console.log(a);
-    };
-
-
     return {
-        init    :    init,
+        init: init,
         // _ajax   :    _ajax,
         // _serializeToObj:_serializeToObj,
         // validate_init: validate_init,

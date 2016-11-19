@@ -9,17 +9,17 @@ var basePath =  '/static/admin';
 require.config({
     baseUrl: basePath,
     paths: {
-        'jquery'            : 'js/jquery.min',
-        'bootstrap'         : 'js/bootstrap.min',
+        'jquery'            : 'js/layout/jquery.min',
+        'bootstrap'         : 'js/layout/bootstrap.min',
         'layer'             : 'lib/layer/layer',
         'bootstrapTable'    : 'lib/bootstrap-table/bootstrap-table.min',
         'bootstrapTableZnCn'    : 'lib/bootstrap-table/locale/bootstrap-table-zh-CN.min',
 
-        'adminBase'         : 'js/adminBase',
+        'adminBase'         : 'js/layout/adminBase',
     },
     map: {
        '*': {
-           'css': 'js/css.min'
+           'css': 'js/layout/css.min'
        }
    },
     shim: {

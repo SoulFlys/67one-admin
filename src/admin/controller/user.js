@@ -5,57 +5,20 @@ export default class extends Base {
    * user action
    * @return {Promise} []
    */
-    indexAction() {
+    async indexAction() {
+        // await this.session("userInfo", 123);
+        // console.log(await this.session("userInfo"));
         return this.display();
     }
 
-    viewAction() {
-        let data = {
-            rows: [
-                {
-                    id: 1,
-                    username: 'xxx'
-                },
-                {
-                    id: 2,
-                    username: 'aaa'
-                },
-                // {
-                //     id: 2,
-                //     username: 'aaa'
-                // },
-                // {
-                //     id: 2,
-                //     username: 'aaa'
-                // },
-                // {
-                //     id: 2,
-                //     username: 'aaa'
-                // },
-                // {
-                //     id: 2,
-                //     username: 'aaa'
-                // },
-                // {
-                //     id: 2,
-                //     username: 'aaa'
-                // },
-                // {
-                //     id: 2,
-                //     username: 'aaa'
-                // },
-                // {
-                //     id: 2,
-                //     username: 'aaa'
-                // },
-                // {
-                //     id: 2,
-                //     username: 'aaa'
-                // }
-            ],
-            total: 2
-        }
-        this.success(data);
+    async viewAction() {
+        let model = this.model("admin");
+        let data = await model.select();
+        this.success(this.assginAjaxList(data));
+    }
+
+    async addAction(){
+        return this.display();
     }
 
 }

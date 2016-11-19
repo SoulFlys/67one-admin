@@ -48,3 +48,13 @@ h1,h2,h3,h4,h5,h6{font-weight:100}h1{font-size:30px}h2{font-size:24px}h3{font-si
     border: 1px solid #e7eaec;
     border-top: 0;
 }
+.logo-name{
+    width:100px;
+    height:100px;
+    margin: 50px auto;
+    font-size: 0;
+}
+.logo-name img{
+    width:100px;
+    height:100px;
+}

@@ -7,16 +7,16 @@
         "indexAction",
         "display",
         "viewAction",
+        "model",
+        "select",
         "data",
-        "rows",
-        "id",
-        "username",
-        "total",
-        "success"
+        "success",
+        "assginAjaxList",
+        "addAction"
     ],
-    "mappings": "AAAA;;;;;;;;;;;;;;;;AACA;;;;;;;;;;;;;;AAEI;;;;qBAIAA,W,0BAAc;AACV,eAAO,KAAKC,OAAL,EAAP;AACH,K;;qBAEDC,U,yBAAa;AACT,YAAIC,OAAO;AACPC,kBAAM,CACF;AACIC,oBAAI,CADR;AAEIC,0BAAU;AAFd,aADE,EAKF;AACID,oBAAI,CADR;AAEIC,0BAAU;AAFd,aALE,CADC;AA2CPC,mBAAO;AA3CA,SAAX;AA6CA,aAAKC,OAAL,CAAaL,IAAb;AACH,K",
+    "mappings": "AAAA;;;;;;;;;;;;;;;;;;;;;;;;AACA;;;;;;;;;;;;;;AAEI;;;;qBAIMA,W;;;;;;6DAGK,KAAKC,OAAL,E;;;;;;;;;;;;;;;;;qBAGLC,U;;;;;;;AACEC,iC,GAAQ,KAAKA,KAAL,CAAW,OAAX,C;;mCACKA,MAAMC,MAAN,E;;;AAAbC,gC;;AACJ,iCAAKC,OAAL,CAAa,KAAKC,cAAL,CAAoBF,IAApB,CAAb;;;;;;;;;;;;;;;;;qBAGEG,S;;;;;;8DACK,KAAKP,OAAL,E",
     "file": "..\\..\\..\\src\\admin\\controller\\user.js",
     "sourcesContent": [
-        "'use strict';\nimport Base from './base.js';\nexport default class extends Base {\n    /**\n   * user action\n   * @return {Promise} []\n   */\n    indexAction() {\n        return this.display();\n    }\n\n    viewAction() {\n        let data = {\n            rows: [\n                {\n                    id: 1,\n                    username: 'xxx'\n                },\n                {\n                    id: 2,\n                    username: 'aaa'\n                },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // },\n                // {\n                //     id: 2,\n                //     username: 'aaa'\n                // }\n            ],\n            total: 2\n        }\n        this.success(data);\n    }\n\n}\n"
+        "'use strict';\nimport Base from './base.js';\nexport default class extends Base {\n    /**\n   * user action\n   * @return {Promise} []\n   */\n    async indexAction() {\n        // await this.session(\"userInfo\", 123);\n        // console.log(await this.session(\"userInfo\"));\n        return this.display();\n    }\n\n    async viewAction() {\n        let model = this.model(\"admin\");\n        let data = await model.select();\n        this.success(this.assginAjaxList(data));\n    }\n\n    async addAction(){\n        return this.display();\n    }\n\n}\n"
     ]
 }

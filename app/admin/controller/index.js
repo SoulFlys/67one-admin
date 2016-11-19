@@ -34,6 +34,8 @@ var _class = function (_Base) {
     */
     _class.prototype.indexAction = function indexAction() {
         //auto render template file index/index.html
+        //]
+        console.log('index');
         return this.display();
     };
 
