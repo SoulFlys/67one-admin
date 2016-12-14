@@ -8,41 +8,13 @@ export default new VueRouter({
     routes: [
         {
             path: "/",
-            name:"/",
             component: require('../components/index')
         }, {
             path: "/category",
-            // name: "category",
-            component: require('../components/category/index'),
-            children: [{
-                path: "add",
-                // name: "categoryAdd",
-                component: require('../components/category/add')
-            }]
+            component: require('../components/category/index')
+        }, {
+            path: "/category/add",
+            component: require('../components/category/add.vue')
         }
-        // {
-        //     path: "/links",
-        //     name:"links",
-        //     component: require('../components/links/index.vue')
-        // }, {
-        //     path: "/list",
-        //     name:"list",
-        //     component: require('../components/article/list.vue')
-        // }, {
-        //     path: "/article/:id",
-        //     name:"article",
-        //     component: require('../components/article/index.vue')
-        // }, {
-        //     path: "/about",
-        //     name:"about",
-        //     component: require('../components/about/index.vue')
-        // }, {
-        //     path: "/no",
-        //     name:"no",
-        //     component: require('../components/no.vue')
-        // },{
-        //     path: "*",
-        //     component: require('../components/layout/404.vue')
-        // }
     ]
 })

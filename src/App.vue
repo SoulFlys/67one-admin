@@ -9,10 +9,10 @@
         <ul>
             <li class="nav-li">网站设置</li>
             <li><router-link to='/category'>栏目管理</router-link></li>
-            <li>文章列表</li>
+            <li><router-link to=''>文章列表</router-link></li>
             <li class="nav-li">其他设置</li>
-            <li>回收站管理</li>
-            <li>SEO管理</li>
+            <li><router-link to=''>回收站管理</router-link></li>
+            <li><router-link to=''>SEO管理</router-link></li>
         </ul>
     </nav>
     <section>
@@ -37,7 +37,7 @@ header{
     @include linHeight(60px);
     background-color: #58B7FF;
     color:#fff;
-    font-size:15px;
+    font-size:16px;
     span,a{
         padding:0 20px;
         color:#fff;
@@ -52,9 +52,10 @@ nav{
     li{
         @include linHeight(40px);
         color: #fff;
-        padding: 0 35px;
         a{
             color: #fff;
+            width: 100%;
+            padding: 0 35px;
         }
         &.nav-li{
             padding: 0 20px;
