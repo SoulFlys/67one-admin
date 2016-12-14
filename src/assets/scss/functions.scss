@@ -1,0 +1,91 @@
+@mixin position($type, $top: null, $right: null, $bottom: null, $left: null, $zIndex: null) {
+    position: $type;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+    z-index: $zIndex;
+}
+@mixin bower($css3, $content) {
+    -webkit-#{$css3}: $content;
+    -moz-#{$css3}: $content;
+    -ms-#{$css3}: $content;
+    -o-#{$css3}: $content;
+    #{$css3}: $content;
+}
+@mixin transition($content) {
+    @include bower(transition,$content);
+}
+@mixin dib {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+@mixin db {
+    display: block;
+}
+@mixin dn {
+    display: none;
+}
+@mixin df(){
+    display: flex;
+    display: -webkit-flex;
+}
+@mixin boxSizing {
+    @include bower(box-sizing,border-box);
+}
+@mixin borderRadius($content) {
+    @include bower(border-radius,$content);
+}
+@mixin transform($content) {
+    @include bower(transform,$content);
+}
+@mixin boxShadow($content) {
+    @include bower(box-shadow,$content);
+}
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    -ms-filter:  "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$opacity * 100})";
+}
+@mixin clink($normal,$hover) {
+    &:active,
+    &:link,
+    &:visited {
+        color: $normal;
+    }
+    &:hover {
+        color: $hover;
+    }
+}
+@mixin imgVHM() {
+    text-align: center;
+    font-size: 0;
+    &:after {
+        display: inline-block;
+        width: 0;
+        height: 100%;
+        content: "center";
+        vertical-align: middle;
+    }
+    img {
+        vertical-align: middle;
+    }
+}
+@mixin clearfix() {
+    *zoom: 1;
+    &:after {
+        content: "\0020";
+        display: block;
+        clear: both;
+    }
+}
+@mixin backgroundSize($con) {
+     @include bower(background-size,$con);
+}
+@mixin linHeight($con) {
+    height: $con;
+    line-height: $con;
+}
+@mixin userSelect($con) {
+     @include bower(user-select,$con);
+}
