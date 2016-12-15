@@ -46,7 +46,7 @@ export default {
     methods: {
         add() {
             console.log(this.$router);
-            this.$router.push({name:'categoryAdd'});
+            this.$router.push({path:'category/add'});
         }
     }
 }

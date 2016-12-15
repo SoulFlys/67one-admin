@@ -8,7 +8,7 @@ export default new VueRouter({
     routes: [
         {
             path: "/",
-            name:"/",
+            // name:"/",
             component: require('../components/index')
         }, {
             path: "/category",
