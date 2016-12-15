@@ -1,6 +1,5 @@
 <template lang="html">
     <div class="category">
-        <router-link to='/category/add'>测试</router-link>
         <el-breadcrumb separator="/" class="breadcrumb">
             <el-breadcrumb-item to="/">首页</el-breadcrumb-item>
             <el-breadcrumb-item>栏目管理</el-breadcrumb-item>
@@ -45,20 +44,12 @@ export default {
     },
     methods: {
         add() {
-            console.log(this.$router);
-            this.$router.push({path:'category/add'});
+            this.$router.push('/category/add');
         }
     }
 }
 </script>
 
 <style lang="scss">@import "../../assets/scss/functions";
-.breadcrumb {
-    font-size: 14px;
-}
-.operation {
-    margin: 10px 0;
-    @include df;
-    justify-content: space-between;
-}
+
 </style>

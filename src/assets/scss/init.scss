@@ -1,3 +1,4 @@
+@import "functions";
 [v-cloak] {
     display: none;
 }
@@ -7,4 +8,14 @@ body,textarea,input,button,select,keygen,legend{
      color: #2c3e50;
      -webkit-font-smoothing: antialiased;
      -moz-osx-font-smoothing: grayscale;
+}
+.view{
+    .breadcrumb {
+        font-size: 16px;
+    }
+    .operation {
+        margin: 10px 0;
+        @include df;
+        justify-content: space-between;
+    }
 }
