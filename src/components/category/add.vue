@@ -7,75 +7,99 @@
         </el-breadcrumb>
         <div class="operation"></div>
         <el-row>
-            <el-col :span="12">
-                <el-form ref="form" :model="form" label-width="80px" label-position="left">
-                    <el-form-item label="活动名称">
-                        <el-input v-model="form.name"></el-input>
-                    </el-form-item>
-                    <el-form-item label="活动区域">
-                        <el-select v-model="form.region" placeholder="请选择活动区域">
-                            <el-option label="区域一" value="shanghai"></el-option>
-                            <el-option label="区域二" value="beijing"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="活动时间">
-                        <el-col :span="11">
-                            <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-                        </el-col>
-                        <el-col class="line" :span="2">-</el-col>
-                        <el-col :span="11">
-                            <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-                        </el-col>
-                    </el-form-item>
-                    <el-form-item label="即时配送">
-                        <el-switch on-text="" off-text="" v-model="form.delivery"></el-switch>
-                    </el-form-item>
-                    <el-form-item label="活动性质">
-                        <el-checkbox-group v-model="form.type">
-                            <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-                            <el-checkbox label="地推活动" name="type"></el-checkbox>
-                            <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-                            <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-                        </el-checkbox-group>
-                    </el-form-item>
-                    <el-form-item label="特殊资源">
-                        <el-radio-group v-model="form.resource">
-                            <el-radio label="线上品牌商赞助"></el-radio>
-                            <el-radio label="线下场地免费"></el-radio>
-                        </el-radio-group>
-                    </el-form-item>
-                    <el-form-item label="活动形式">
-                        <el-input type="textarea" v-model="form.desc"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                        <el-button>取消</el-button>
-                    </el-form-item>
-                </el-form>
-            </el-col>
+            <el-alert title="当前栏目管理只提供最多二级栏目的添加" type="warning" show-icon></el-alert>
+            <div class="operation"></div>
+            <el-form :model="form" :rules="rules" ref="form" label-width="100px" label-position="right">
+                <el-form-item label="父级栏目" prop="pid">
+                    <el-select v-model="form.pid" placeholder="请选择父级栏目(不选则为一级栏目)">
+                        <el-option label="Javascript" value="1"></el-option>
+                        <el-option label="vue" value="2"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="栏目名称" prop="name">
+                    <el-input v-model="form.name" placeholder="请输入栏目名称"></el-input>
+                </el-form-item>
+                <el-form-item label="栏目类型" prop="type">
+                    <el-radio-group v-model="form.type">
+                        <el-radio label="1">分类栏目</el-radio>
+                        <el-radio label="2">单独页面</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="栏目路由" prop="router">
+                    <el-input v-model="form.router" placeholder="请输入栏目路由"></el-input>
+                </el-form-item>
+                <el-form-item label="栏目排序" prop="sort">
+                    <el-input-number v-model="form.sort" :min="0"></el-input-number>
+                </el-form-item>
+                <el-form-item label="是否启用" prop="status">
+                    <el-switch on-text="启用" off-text="禁用" v-model="form.status"></el-switch>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submit">立即创建</el-button>
+                    <el-button @click="goback">返回</el-button>
+                    <el-button type="info" @click="reset">重置</el-button>
+                </el-form-item>
+            </el-form>
         </el-row>
     </div>
 </template>
 
 <script>
+import api from '../../api'
 export default {
     data() {
         return {
             form: {
+                pid: '',
                 name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
+                type: '1',
+                router: '',
+                sort: 0,
+                status: false
+            },
+            rules: {
+                name: [{required: true, message: '请输入栏目名称',trigger: 'foucs'}],
+                router: [{required: true, message: '请输入栏目路由',trigger: 'foucs'}]
             }
         }
     },
     methods: {
-        onSubmit() {
-            console.log('submit!');
+        submit(ev) {
+            this.$refs.form.validate((valid) => {
+                return valid ? this.add() : false;
+            })
+        },
+        reset() {
+            this.$refs.form.resetFields();
+        },
+        goback() {
+            this.$router.go(-1);
+        },
+        async add() {
+            let data = {};
+                data.pid = this.form.pid || 0;
+                data.name = this.form.name;
+                data.type = this.form.type;
+                data.router = this.form.router;
+                data.sort = this.form.sort;
+                data.status = this.form.status ? 1 : 0;
+                data.level = data.pid ? 2 : 1;
+            let result = await api({url:'/admin/category/add', data:data, method:'post'});
+            if(result.status === 'ok'){
+                this.$message({
+                    showClose: true,
+                    message: '添加成功',
+                    type: 'success'
+                });
+                this.$router.push('/category');
+            }else{
+                this.$message({
+                    showClose: true,
+                    message: '添加失败',
+                    type: 'error'
+                });
+                console.log('result',result);
+            }
         }
     }
 }
