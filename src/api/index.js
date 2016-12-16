@@ -10,8 +10,7 @@ const fetchApi = (cfg) =>{
     if(!cfg.url) return false;
     cfg.data = cfg.data || {};
     return new Promise((resolve, reject) => {
-        request
-            .post(region + cfg.url)
+        request(cfg.method, region + cfg.url)
             .send(cfg.data)
             .set('X-API-Key', 'foobar')
             .set('Accept', 'application/json')

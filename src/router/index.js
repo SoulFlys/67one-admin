@@ -15,6 +15,9 @@ export default new VueRouter({
         }, {
             path: "/category/add",
             component: require('../components/category/add.vue')
+        }, {
+            path: "/category/edit",
+            component: require('../components/category/edit.vue')
         }
     ]
 })

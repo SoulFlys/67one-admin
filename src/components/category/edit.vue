@@ -1,9 +1,9 @@
 <template lang="html">
-    <div class="category-add">
+    <div class="category-edit">
         <el-breadcrumb separator="/" class="breadcrumb">
             <el-breadcrumb-item to="/">首页</el-breadcrumb-item>
             <el-breadcrumb-item to="/category">栏目管理</el-breadcrumb-item>
-            <el-breadcrumb-item>添加</el-breadcrumb-item>
+            <el-breadcrumb-item>修改</el-breadcrumb-item>
         </el-breadcrumb>
         <div class="operation"></div>
         <el-row>
@@ -35,7 +35,7 @@
                     <el-switch on-text="启用" off-text="禁用" v-model="form.status"></el-switch>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submit">立即创建</el-button>
+                    <el-button type="primary" @click="update">立即更新</el-button>
                     <el-button @click="goback">返回</el-button>
                     <el-button type="info" @click="reset">重置</el-button>
                 </el-form-item>
@@ -46,6 +46,7 @@
 
 <script>
 import api from '../../api'
+import _ from 'lodash'
 export default {
     data() {
         return {
@@ -53,7 +54,7 @@ export default {
             form: {
                 pid: '',
                 name: '',
-                type: '1',
+                type: '',
                 router: '',
                 sort: 0,
                 status: true
@@ -65,12 +66,14 @@ export default {
         }
     },
     mounted(){
-        this.getList();
+        let id = this.$route.query.id;
+        if(id) this.getList();
+        if(id) this.findById(id);
     },
     methods: {
         submit(ev) {
             this.$refs.form.validate((valid) => {
-                return valid ? this.add() : false;
+                return valid ? this.edit() : false;
             })
         },
         reset() {
@@ -81,11 +84,19 @@ export default {
         },
         async getList(){
             let result = await api({url:'/admin/category', method:'POST'});
-            // console.log(result);
+            let id = this.$route.query.id;
+            result = _.filter(result,(item) => item._id !== id);
             this.category = result;
         },
-        async add() {
+        async findById(id){
+            let result = await api({url:'/admin/category/findById', data:{id:id}, method:'POST'});
+            result.status = result.status === 1 ? true : false;
+            result.type = String(result.type);
+            this.form = result;
+        },
+        async update() {
             let data = {};
+                data.id = this.$route.query.id;
                 data.pid = this.form.pid || 0;
                 data.name = this.form.name;
                 data.type = this.form.type;
@@ -93,18 +104,19 @@ export default {
                 data.sort = this.form.sort;
                 data.status = this.form.status ? 1 : 0;
                 data.level = data.pid ? 2 : 1;
-            let result = await api({url:'/admin/category/add', data:data, method:'post'});
+            let result = await api({url:'/admin/category/update', data:data, method:'PUT'});
+            // console.log(result);
             if(result.status === 'ok'){
                 this.$message({
                     showClose: true,
-                    message: '添加成功',
+                    message: '更新成功',
                     type: 'success'
                 });
                 this.$router.push('/category');
             }else{
                 this.$message({
                     showClose: true,
-                    message: '添加失败',
+                    message: '更新失败',
                     type: 'error'
                 });
                 console.log('result',result);
