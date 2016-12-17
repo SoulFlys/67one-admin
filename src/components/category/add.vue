@@ -56,7 +56,7 @@ export default {
                 type: '1',
                 router: '',
                 sort: 0,
-                status: true
+                status: false
             },
             rules: {
                 name: [{required: true, message: '请输入栏目名称',trigger: 'foucs'}],
@@ -81,7 +81,7 @@ export default {
         },
         async getList(){
             let result = await api({url:'/admin/category', method:'POST'});
-            // console.log(result);
+            console.log(result);
             this.category = result;
         },
         async add() {
@@ -113,3 +113,6 @@ export default {
     }
 }
 </script>
+
+<style lang="css">
+</style>

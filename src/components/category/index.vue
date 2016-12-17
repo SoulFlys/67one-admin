@@ -5,13 +5,12 @@
             <el-breadcrumb-item>栏目管理</el-breadcrumb-item>
         </el-breadcrumb>
         <div class="operation">
-          <div class="operation-condition"></div>
-          <div class="operation-btns">
-              <el-button type="success" size="small" icon="plus" @click="add">添加</el-button>
-              <el-button type="info" size="small" icon="upload" @click="refresh">刷新</el-button>
-          </div>
+            <div class="operation-condition"></div>
+            <div class="operation-btns">
+                <el-button type="success" size="small" icon="plus" @click="add">添加</el-button>
+                <el-button type="info" size="small" icon="upload" @click="refresh">刷新</el-button>
+            </div>
         </div>
-
         <el-table :data="list" border style="width: 100%">
             <el-table-column inline-template label="更新日期" width="150">
                 <span>{{row.meta.updateAt | formatDate}}</span>
@@ -31,7 +30,7 @@
                     <el-tag type="danger" v-else>禁用</el-tag>
                 </div>
             </el-table-column>
-            <el-table-column inline-template label="创建时间" width="180">
+            <el-table-column inline-template label="创建时间" width="150">
                 <span>{{row.meta.createAt | formatDate}}</span>
             </el-table-column>
             <el-table-column label="操作" inline-template align="center">
