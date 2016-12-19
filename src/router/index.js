@@ -6,6 +6,10 @@ const Index = [
     {
         path: "/",
         component: require('../components/index')
+    },
+    {
+        path: "/file/add",
+        component: require('../components/file/add')
     }
 ]
 
@@ -38,6 +42,8 @@ const Article = [
         component: require('../components/article/edit.vue')
     }
 ]
+
+
 
 export default new VueRouter({
     mode: 'history',
