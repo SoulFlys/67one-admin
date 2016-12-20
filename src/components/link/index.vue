@@ -1,8 +1,8 @@
 <template lang="html">
-    <div class="category">
+    <div class="link">
         <el-breadcrumb separator="/" class="breadcrumb">
             <el-breadcrumb-item to="/">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>栏目管理</el-breadcrumb-item>
+            <el-breadcrumb-item>友情链接</el-breadcrumb-item>
         </el-breadcrumb>
         <div class="operation">
             <div class="operation-condition"></div>
@@ -17,13 +17,11 @@
             </el-table-column>
             <el-table-column prop="sort" label="排序" sortable width="100"></el-table-column>
             <el-table-column prop="_id" label="_ID" width="210"></el-table-column>
-            <el-table-column prop="pid" label="PID" width="210"></el-table-column>
-            <el-table-column inline-template label="名称" min-width="120">
-                <span class="category-name">{{row.name}}</span>
+            <el-table-column prop="type" label="类型" width="120"></el-table-column>
+            <el-table-column prop="name" label="名称" min-width="120"></el-table-column>
+            <el-table-column inline-template label="地址" min-width="120">
+                <a href="">{{row.href}}</span>
             </el-table-column>
-            <el-table-column prop="level" label="等级" width="90"></el-table-column>
-            <el-table-column prop="type" label="类型" width="90"></el-table-column>
-            <el-table-column prop="router" label="路由" width="100"></el-table-column>
             <el-table-column inline-template label="状态" width="80">
                 <div>
                     <el-tag type="success" v-if="row.status">启用</el-tag>
@@ -45,59 +43,38 @@
 
 <script>
 import api from '../../api'
-import _ from 'lodash'
 
 export default {
-    name: 'category',
+    name: 'link',
     data() {
         return {
             list: []
         }
     },
-    computed: {},
     mounted() {
         this.getList();
     },
     methods: {
-        async getList() {
-            let result = await api({url:'/admin/category', method:'POST'});
-            _.filter(result,(item)=>{
-                item.level = item.level === 1 ? '一级栏目' : '二级栏目';
-                item.type = item.type === 1 ? '分类栏目' : '单独页面';
-            })
-            this.list = result;
-        },
         add() {
-            this.$router.push('/category/add');
+            this.$router.push('/link/add');
         },
         refresh() {
             this.getList();
         },
-        async remove(row){
-            let result = await api({url:'/admin/category/delete',data:{id:row._id},method:'DELETE'});
-            if(result.status === 'ok'){
-                this.$message({showClose: true,message: '删除成功',type: 'success'});
-                this.getList();
-            }else{
-                this.$message({showClose: true,message: '删除失败',type: 'error'});
-            }
+        async getList(){
+            let result = await api({url:'/admin/link', method:'POST'});
+            console.log(result)
+            this.list = result;
         },
-        edit(row){
-            this.$router.push({path:'/category/edit', query: { id: row._id }});
+        edit(row) {
+
+        },
+        remove(row) {
+
         }
     }
 }
 </script>
 
-<style lang="scss">@import "../../assets/scss/functions";
-.category-name{
-    background-color: #8492a6;
-    display: inline-block;
-    padding: 0 5px;
-    line-height: 22px;
-    color: #fff;
-    border-radius: 4px;
-    box-sizing: border-box;
-    border: 1px solid transparent;
-}
+<style lang="css">
 </style>

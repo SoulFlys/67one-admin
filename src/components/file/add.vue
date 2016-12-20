@@ -10,11 +10,11 @@
             <div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
-        <img src="http://localhost:3000/0.1769457545060269" alt="">
     </div>
 </template>
 
 <script>
+import api from '../../api'
 export default {
     data() {
         return {
@@ -23,13 +23,12 @@ export default {
     },
     methods: {
         handleRemove(file, fileList) {
-            console.log(file, fileList);
-        },
-        handlePreview(file) {
-            console.log(file);
+            api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
         },
         success(response, file, fileList){
-            console.log(response,file,fileList)
+            file.id = response.id;
+            file.newName = response.name;
+            file.newUrl = response.url;
         }
     }
 }

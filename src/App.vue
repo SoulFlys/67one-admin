@@ -10,7 +10,8 @@
             <li class="nav-li">网站设置</li>
             <li><router-link to='/category'>栏目管理</router-link></li>
             <li><router-link to='/article'>文章列表</router-link></li>
-            <li><router-link to='/file/add'>文件上传</router-link></li>
+            <li><router-link to='/file'>文件管理</router-link></li>
+            <li><router-link to='/link'>友情链接</router-link></li>
             <li class="nav-li">其他设置</li>
             <li><router-link to=''>回收站管理</router-link></li>
             <li><router-link to=''>SEO管理</router-link></li>
