@@ -17,10 +17,12 @@
             </el-table-column>
             <el-table-column prop="sort" label="排序" sortable width="100"></el-table-column>
             <el-table-column prop="_id" label="_ID" width="210"></el-table-column>
-            <el-table-column prop="type" label="类型" width="120"></el-table-column>
+            <el-table-column prop="type" label="类型" inline-template width="120" :filters="filters" :filter-method="filterTag">
+                <el-tag type="primary" close-transition>{{row.type}}</el-tag>
+            </el-table-column>
             <el-table-column prop="name" label="名称" min-width="120"></el-table-column>
             <el-table-column inline-template label="地址" min-width="120">
-                <a href="">{{row.href}}</span>
+                <a :href="row.href" target="_blank">{{row.href}}</span>
             </el-table-column>
             <el-table-column inline-template label="状态" width="80">
                 <div>
@@ -48,7 +50,8 @@ export default {
     name: 'link',
     data() {
         return {
-            list: []
+            list: [],
+            filters: []
         }
     },
     mounted() {
@@ -63,18 +66,40 @@ export default {
         },
         async getList(){
             let result = await api({url:'/admin/link', method:'POST'});
-            console.log(result)
+            for(let item of result){
+                this.filters.push({
+                    text:item.type,
+                    value:item.type
+                });
+            }
             this.list = result;
         },
         edit(row) {
-
+            this.$router.push({path:'/link/edit', query: { id: row._id }});
         },
-        remove(row) {
-
+        remove(row){
+            this.$confirm(`是否删除【${row.name}】的友情链接?`, '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.del(row);
+            }).catch(() => {
+                this.$message({type: 'info',message: '已取消删除'});
+            });
+        },
+        async del(row){
+            let result = await api({url:'/admin/link/delete',data:{id:row._id},method:'DELETE'});
+            if(result.status === 'ok'){
+                this.$message({showClose: true,message: '删除成功',type: 'success'});
+                this.getList();
+            }else{
+                this.$message({showClose: true,message: '删除失败',type: 'error'});
+            }
+        },
+        filterTag(value, row){
+            return row.type === value;
         }
     }
 }
 </script>
-
-<style lang="css">
-</style>

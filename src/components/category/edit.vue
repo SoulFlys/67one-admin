@@ -73,7 +73,7 @@ export default {
     methods: {
         submit(ev) {
             this.$refs.form.validate((valid) => {
-                return valid ? this.edit() : false;
+                return valid ? this.update() : false;
             })
         },
         reset() {
