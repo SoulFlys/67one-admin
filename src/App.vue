@@ -13,8 +13,8 @@
             <li><router-link to='/file'>文件管理</router-link></li>
             <li><router-link to='/link'>友情链接</router-link></li>
             <li class="nav-li">其他设置</li>
-            <li><router-link to=''>回收站管理</router-link></li>
-            <li><router-link to=''>SEO管理</router-link></li>
+            <li><router-link to='/trash'>回收站管理</router-link></li>
+            <li><router-link to='/seo'>SEO管理</router-link></li>
         </ul>
     </nav>
     <section>
@@ -58,6 +58,10 @@ nav{
             color: #fff;
             width: 100%;
             padding: 0 35px;
+            @include boxSizing;
+            &.nav-li-hover{
+                color:#58b7ff;
+            }
         }
         &.nav-li{
             padding: 0 20px;

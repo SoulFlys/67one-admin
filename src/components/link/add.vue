@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import api from '../../api'
+import {fetchApi as api} from '../../api'
 import _ from 'lodash'
 export default {
     data(){
@@ -72,7 +72,6 @@ export default {
         },
         async add(){
             let data = _.clone(this.form);
-            data.status = data.status ? 1 : 0;
             let result = await api({url:'/admin/link/add', data:data, method:'post'});
             if(result.status === 'ok'){
                 this.$message({

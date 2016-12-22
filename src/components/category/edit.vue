@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import api from '../../api'
+import {fetchApi as api} from '../../api'
 import _ from 'lodash'
 export default {
     data() {
@@ -90,19 +90,13 @@ export default {
         },
         async findById(id){
             let result = await api({url:'/admin/category/findById', data:{id:id}, method:'POST'});
-            result.status = result.status === 1 ? true : false;
             result.type = String(result.type);
             this.form = result;
         },
         async update() {
-            let data = {};
+            let data = _.clone(this.form);
                 data.id = this.$route.query.id;
-                data.pid = this.form.pid || 0;
-                data.name = this.form.name;
-                data.type = this.form.type;
-                data.router = this.form.router;
-                data.sort = this.form.sort;
-                data.status = this.form.status ? 1 : 0;
+                data.pid = data.pid || 0;
                 data.level = data.pid ? 2 : 1;
             let result = await api({url:'/admin/category/update', data:data, method:'PUT'});
             // console.log(result);

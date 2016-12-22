@@ -15,13 +15,13 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="文章标题" prop="title">
-                    <el-input v-model="form.name" placeholder="请输入文章标题"></el-input>
+                    <el-input v-model="form.title" placeholder="请输入文章标题"></el-input>
                 </el-form-item>
-                <el-form-item label="文章主图" prop="title">
+                <el-form-item label="文章主图" prop="image">
                     <el-input v-model="form.image" placeholder="请上传文章主图"></el-input>
                 </el-form-item>
-                <el-form-item label="单页设置" prop="status">
-                    <el-switch on-text="是" off-text="否" v-model="form.status"></el-switch>
+                <el-form-item label="单页设置" prop="alone">
+                    <el-switch on-text="是" off-text="否" v-model="form.alone"></el-switch>
                 </el-form-item>
                 <el-form-item label="文章内容" prop="content">
                     <el-col :span="12">
@@ -31,10 +31,10 @@
                         <div class="article-result md-preview markdown shrink" v-html="markdownResult"></div>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="文章标签" prop="title">
+                <el-form-item label="文章标签" prop="tags">
                     <el-input v-model="form.tags" placeholder="请输入文章标签（多个以英文逗号隔开）"></el-input>
                 </el-form-item>
-                <el-form-item label="加入回收站" prop="status">
+                <el-form-item label="加入回收站" prop="delete">
                     <el-switch on-text="是" off-text="否" v-model="form.delete"></el-switch>
                 </el-form-item>
                 <el-form-item label="是否启用" prop="status">
@@ -53,20 +53,27 @@
 <script>
 import marked from 'marked'
 import _ from 'lodash'
+import {fetchApi as api} from '../../api'
+
 export default {
     data() {
         return {
+            category: [],
             form: {
                 cid: '',
-                name: '',
-                image: '',
-                status: false,
+                title: '',
+                image: 'http://localhost:3000/2016.12.22.16.21.24.30.jpg',
+                alone: false,
                 content: '',
                 tags: '',
                 delete: false,
-                status: false
+                status: true
             },
-            rules: {},
+            rules: {
+                cid:  [{required: true, message: '请选择栏目',trigger: 'foucs'}],
+                title: [{required: true, message: '请输入文章标题',trigger: 'foucs'}],
+                content: [{required: true, message: '请输入文章内容',trigger: 'foucs'}]
+            },
             markdownResult: '',
         }
     },
@@ -78,11 +85,14 @@ export default {
         }
     },
     mounted() {
-        this.$nextTick(this.forResult);        
+        this.$nextTick(this.forResult);
+        this.getCategory();
     },
     methods: {
         submit() {
-            console.log(this.markdownResult);
+            this.$refs.form.validate((valid) => {
+                return valid ? this.add() : false;
+            })
         },
         goback() {
             this.$router.go(-1);
@@ -98,6 +108,32 @@ export default {
             _.debounce((e) => {
                 this.form.content = e.target.value;
             }, 300);
+        },
+        async getCategory() {
+            let result = await api({url:'/admin/category', method:'POST'});
+            this.category = result;
+        },
+        async add() {
+            let data = _.clone(this.form);
+            data.content = this.markdownResult;
+            data.tags = _.filter(data.tags.split(','), (item) => item != '');
+            data.description = '这是临时的描述';
+            let result = await api({url:'/admin/article/add', data:data, method:'post'});
+            if(result.status === 'ok'){
+                this.$message({
+                    showClose: true,
+                    message: '添加成功',
+                    type: 'success'
+                });
+                this.$router.push('/article');
+            }else{
+                this.$message({
+                    showClose: true,
+                    message: '添加失败',
+                    type: 'error'
+                });
+                console.log('result',result);
+            }
         }
     }
 }

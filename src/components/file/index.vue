@@ -19,8 +19,8 @@
                         <span><i class="el-icon-view"></i></span>
                         <span @click.stop.prevent="remove(list._id)"><i class="el-icon-delete"></i></span>
                     </div>
-                    <h4>{{list.name}}</h4>
                 </div>
+                <h4 class="file-list-h4">{{list.name}}</h4>
             </div>
             <div class="file-list-no" v-if="lists.length <= 0">
                 暂时没有任何文件资源
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import api from '../../api'
+import {fetchApi as api} from '../../api'
 import _ from 'lodash'
 export default {
     data() {
@@ -80,20 +80,15 @@ export default {
             @include boxSizing;
         }
         .file-list-box{
-            display: none;
-            position: absolute;
-            right:0;
-            top:0;
+            @include position(absolute,$top:0,$left:0,$zIndex:1);
             width:100%;
             height:100%;
             background-color: rgba(0,0,0,.72);
-            z-index: 1;
             text-align: center;
             border:1px solid #ccc;
             @include boxSizing;
             @include borderRadius(4px);
             overflow: hidden;
-            transition: all 0.5;
             >div{
                 width:100%;
                 @include position(absolute,$top:25%);
@@ -104,16 +99,25 @@ export default {
                     @include dib;
                 }
             }
-            >h4{
-                width:100%;
-                @include linHeight(40px);
-                background-color: #fff;
-                @include position(absolute,$bottom:0);
-            }
+            @include opacity(0);
+        }
+        .file-list-h4{
+            @include linHeight(40px);
+            background-color: #fff;
+            @include position(absolute,$bottom:1px,$left:1px,$right:1px,$zIndex:1);
+            @include borderRadius(0 0 4px 4px);
+            overflow: hidden;
+            padding-left: 4px;
+            @include opacity(0);
         }
         &:hover{
             .file-list-box{
-                display: block;
+                @include opacity(1);
+                @include transition(opacity  0.5s);
+            }
+            .file-list-h4{
+                @include opacity(1);
+                @include transition(opacity  0.5s);
             }
         }
     }

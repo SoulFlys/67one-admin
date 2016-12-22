@@ -8,7 +8,6 @@ const Index = [
         component: require('../components/index')
     }
 ]
-
 const Category = [
     {
         path: "/category",
@@ -23,7 +22,6 @@ const Category = [
         component: require('../components/category/edit.vue')
     }
 ]
-
 const Article = [
     {
         path: "/article",
@@ -38,7 +36,6 @@ const Article = [
         component: require('../components/article/edit.vue')
     }
 ]
-
 const File = [
     {
         path: "/file",
@@ -49,7 +46,6 @@ const File = [
         component: require('../components/file/add')
     }
 ]
-
 const Link = [
     {
         path: '/link',
@@ -68,5 +64,6 @@ const Link = [
 export default new VueRouter({
     mode: 'history',
     scrollBehavior: () => ({y: 0}),
+    linkActiveClass: 'nav-li-hover',
     routes: Index.concat(Category, Article, File, Link)
 })

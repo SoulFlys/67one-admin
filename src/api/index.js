@@ -1,11 +1,14 @@
 import request from 'superagent'
-const region = 'http://localhost:3000/67api'
 
 const isObj = (obj) => {
     return obj && Object.prototype.toString.call(obj) === '[object Object]';
 }
 
-const fetchApi = (cfg) =>{
+
+export const region = 'http://localhost:3000/67api'
+export const rootUrl = 'http://localhost:3000/'
+
+export const fetchApi = (cfg) =>{
     if(!isObj(cfg)) return false;
     if(!cfg.url) return false;
     cfg.data = cfg.data || {};
@@ -25,5 +28,3 @@ const fetchApi = (cfg) =>{
             });
         });
 }
-
-export default fetchApi;

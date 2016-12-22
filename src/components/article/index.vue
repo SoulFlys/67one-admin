@@ -15,14 +15,29 @@
             <el-table-column inline-template label="更新日期" width="150">
                 <span>{{row.meta.updateAt | formatDate}}</span>
             </el-table-column>
-            <el-table-column prop="sort" label="排序" sortable width="80"></el-table-column>
-            <el-table-column prop="_id" label="_ID" width="190"></el-table-column>
+            <!-- <el-table-column prop="_id" label="_ID" width="190"></el-table-column> -->
             <el-table-column prop="name" label="栏目" width="100"></el-table-column>
-            <el-table-column prop="image" label="主图" width="100"></el-table-column>
+            <el-table-column inline-template label="主图" width="100">
+                <div class="">
+                    <img :src="row.image" alt="" width="100%">
+                </div>
+            </el-table-column>
             <el-table-column prop="title" label="标题" min-width="200"></el-table-column>
-            <el-table-column prop="tags" label="标签" min-width="120"></el-table-column>
-            <el-table-column prop="alone" label="单页" width="80"></el-table-column>
-            <el-table-column prop="delete" label="回收站" width="80"></el-table-column>
+            <el-table-column inline-template label="标签" min-width="100">
+                <el-tag type="primary" v-for="tag in row.tags" style="margin-right:10px">{{tag}}</el-tag>
+            </el-table-column>
+            <el-table-column inline-template  label="是否单页" width="90">
+                <div>
+                    <el-tag type="success" v-if="row.alone">是</el-tag>
+                    <el-tag type="danger" v-else>否</el-tag>
+                </div>
+            </el-table-column>
+            <el-table-column inline-template label="在回收站" width="100">
+                <div>
+                    <el-tag type="danger" v-if="row.delete">在</el-tag>
+                    <el-tag type="success" v-else>不在</el-tag>
+                </div>
+            </el-table-column>
             <el-table-column inline-template label="状态" width="80">
                 <div>
                     <el-tag type="success" v-if="row.status">启用</el-tag>
@@ -43,6 +58,8 @@
 </template>
 
 <script>
+import {fetchApi as api} from '../../api'
+import _ from 'lodash'
 export default {
     name: 'article',
     data() {
@@ -50,9 +67,18 @@ export default {
             list: []
         }
     },
+    mounted() {
+        this.getList();
+    },
     methods: {
         add() {
             this.$router.push('/article/add');
+        },
+        async getList() {
+            let result = await api({url:'/admin/article', method:'POST'});
+            _.filter(result,(item)=> item.name = item.cid.name);
+            console.log(result)
+            this.list = result;
         },
     }
 }

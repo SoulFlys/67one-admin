@@ -45,7 +45,8 @@
 </template>
 
 <script>
-import api from '../../api'
+import {fetchApi as api} from '../../api'
+import _ from 'lodash'
 export default {
     data() {
         return {
@@ -85,13 +86,8 @@ export default {
             this.category = result;
         },
         async add() {
-            let data = {};
-                data.pid = this.form.pid || 0;
-                data.name = this.form.name;
-                data.type = this.form.type;
-                data.router = this.form.router;
-                data.sort = this.form.sort;
-                data.status = this.form.status ? 1 : 0;
+            let data = _.clone(this.form);
+                data.pid = data.pid || 0;
                 data.level = data.pid ? 2 : 1;
             let result = await api({url:'/admin/category/add', data:data, method:'post'});
             if(result.status === 'ok'){

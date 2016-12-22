@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import api from '../../api'
+import {fetchApi as api} from '../../api'
 
 export default {
     name: 'link',

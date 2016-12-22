@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import api from '../../api'
+import {fetchApi as api} from '../../api'
 import _ from 'lodash'
 export default {
     data(){
@@ -69,13 +69,11 @@ export default {
         },
         async findById(id){
             let result = await api({url:'/admin/link/findById', data:{id:id}, method:'POST'});
-            result.status = result.status === 1 ? true : false;
             this.form = result;
         },
         async update(){
             let data = _.clone(this.form);
             data.id = this.$route.query.id;
-            data.status = data.status ? 1 : 0;
             let result = await api({url:'/admin/link/update', data:data, method:'PUT'});
             if(result.status === 'ok'){
                 this.$message({
