@@ -2,12 +2,11 @@
     <div class="article">
         <el-breadcrumb separator="/" class="breadcrumb">
             <el-breadcrumb-item to="/">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>文章列表</el-breadcrumb-item>
+            <el-breadcrumb-item>回收站管理</el-breadcrumb-item>
         </el-breadcrumb>
         <div class="operation">
           <div class="operation-condition"></div>
           <div class="operation-btns">
-              <el-button type="success" size="small" icon="plus" @click="add">添加</el-button>
               <el-button type="info" size="small" icon="upload" @click="refresh">刷新</el-button>
           </div>
         </div>
@@ -16,7 +15,7 @@
                 <span>{{row.meta.updateAt | formatDate}}</span>
             </el-table-column>
             <el-table-column prop="_id" label="_ID" width="200"></el-table-column>
-            <el-table-column prop="name" label="栏目" width="120" :filters="catFilters" :filter-method="catFiltersMethod"></el-table-column>
+            <el-table-column prop="name" label="栏目" width="120"></el-table-column>
             <el-table-column inline-template label="标题" min-width="200">
                 <el-tooltip placement="top">
                     <div slot="content" class="article-title-img">
@@ -35,13 +34,7 @@
                     <el-tag type="danger" v-else>否</el-tag>
                 </div>
             </el-table-column>
-            <el-table-column inline-template prop="delete" label="在回收站" width="120" :filters="delFilters" :filter-method="delFiltersMethod">
-                <div>
-                    <el-tag type="danger" v-if="row.delete">在</el-tag>
-                    <el-tag type="success" v-else>不在</el-tag>
-                </div>
-            </el-table-column>
-            <el-table-column inline-template prop="status" label="状态" width="100" :filters="staFilters" :filter-method="staFiltersMethod">
+            <el-table-column inline-template prop="status" label="状态" width="100">
                 <div>
                     <el-tag type="success" v-if="row.status">启用</el-tag>
                     <el-tag type="danger" v-else>禁用</el-tag>
@@ -50,10 +43,10 @@
             <el-table-column inline-template label="创建时间" width="150">
                 <span>{{row.meta.createAt | formatDate}}</span>
             </el-table-column>
-            <el-table-column label="操作" inline-template align="center">
+            <el-table-column label="操作" inline-template align="center" min-width="150">
                 <div>
-                    <el-button type="warning" size="small" icon="edit" @click="edit(row)"></el-button>
-                    <el-button type="danger" size="small" icon="delete" @click="remove(row)"></el-button>
+                    <el-button type="success" size="small" @click="revoke(row)">撤回删除</el-button>
+                    <el-button type="danger" size="small" @click="remove(row)">彻底删除</el-button>
                 </div>
             </el-table-column>
         </el-table>
@@ -68,56 +61,37 @@ export default {
     data() {
         return {
             list: [],
-            delFilters: [],
-            catFilters: [],
-            staFilters: []
         }
     },
     mounted() {
         this.getList();
     },
     methods: {
-        add() {
-            this.$router.push('/article/add');
-        },
         refresh() {
             this.getList();
         },
         async getList() {
-            let result = await api({url:'/admin/article', method:'POST'});
+            let result = await api({url:'/admin/article/trash', method:'POST'});
             _.filter(result,(item)=> item.name = item.cid.name);
-            _.each(result,(item) => {
-                this.addFilter(this.delFilters,item,'delete','在','不在');
-                this.addFilter(this.catFilters,item,'name');
-                this.addFilter(this.staFilters,item,'status','启用','禁用');
-            });
             this.list = result;
         },
-        addFilter(arr,obj,str,right,error){
-            if(!(_.find(arr,(key)=> key.value === obj[str]))){
-                arr.push({
-                    text:right ? (obj[str] ? right: error) : obj[str],
-                    value:obj[str]
-                });
-            }
-        },
-        async remove(row) {
-            let result = await api({url:'/admin/article/nodelete',data:{id:row._id,del:true},method:'PUT'});
+        async revoke(row){
+            let result = await api({url:'/admin/article/nodelete',data:{id:row._id,del:false},method:'PUT'});
             if(result.status === 'ok'){
-                this.$message({showClose: true,message: '加入回收站成功',type: 'success'});
+                this.$message({showClose: true,message: '恢复文章成功',type: 'success'});
                 this.getList();
             }else{
-                this.$message({showClose: true,message: '加入回收站失败',type: 'error'});
+                this.$message({showClose: true,message: '恢复文章失败',type: 'error'});
             }
         },
-        delFiltersMethod(value, row) {
-            return row.delete === value;
-        },
-        catFiltersMethod(value, row) {
-            return row.name === value;
-        },
-        staFiltersMethod(value, row) {
-            return row.status === value;
+        async remove(row){
+            let result = await api({url:'/admin/article/delete',data:{id:row._id},method:'DELETE'});
+            if(result.status === 'ok'){
+                this.$message({showClose: true,message: '删除成功',type: 'success'});
+                this.getList();
+            }else{
+                this.$message({showClose: true,message: '删除失败',type: 'error'});
+            }
         }
     }
 }

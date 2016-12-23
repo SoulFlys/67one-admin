@@ -24,12 +24,13 @@
                     <el-switch on-text="是" off-text="否" v-model="form.alone"></el-switch>
                 </el-form-item>
                 <el-form-item label="文章内容" prop="content">
-                    <el-col :span="12">
+                    <markdown v-model="form.content"></markdown>
+                    <!-- <el-col :span="12">
                         <el-input type="textarea" v-model="form.content" @input="update" :autosize="{ minRows: 12}" placeholder="请输入文章内容（仅支持markdown语法）"></el-input>
                     </el-col>
                     <el-col :span="12" class="editormd">
                         <div class="article-result md-preview markdown shrink" v-html="markdownResult"></div>
-                    </el-col>
+                    </el-col> -->
                 </el-form-item>
                 <el-form-item label="文章标签" prop="tags">
                     <el-input v-model="form.tags" placeholder="请输入文章标签（多个以英文逗号隔开）"></el-input>
@@ -54,8 +55,12 @@
 import marked from 'marked'
 import _ from 'lodash'
 import {fetchApi as api} from '../../api'
+import Markdown from './markdown.vue'
 
 export default {
+    components: {
+        Markdown
+    },
     data() {
         return {
             category: [],
@@ -85,11 +90,12 @@ export default {
         }
     },
     mounted() {
-        this.$nextTick(this.forResult);
         this.getCategory();
     },
     methods: {
         submit() {
+            console.log(this.form);
+            console.log(this.markdownResult);
             this.$refs.form.validate((valid) => {
                 return valid ? this.add() : false;
             })
@@ -98,17 +104,6 @@ export default {
             this.$router.go(-1);
         },
         reset() {},
-        forResult(){
-            let textarea = document.querySelector('.el-textarea__inner');
-            let result = document.querySelector('.article-result');
-            result.style.height = textarea.style.height;
-        },
-        update() {
-            this.forResult();
-            _.debounce((e) => {
-                this.form.content = e.target.value;
-            }, 300);
-        },
         async getCategory() {
             let result = await api({url:'/admin/category', method:'POST'});
             this.category = result;
@@ -150,5 +145,4 @@ export default {
     line-height: 1.5;
     @include borderRadius(4px);
 }
-
 </style>

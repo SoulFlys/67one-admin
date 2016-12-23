@@ -66,13 +66,18 @@ export default {
         },
         async getList(){
             let result = await api({url:'/admin/link', method:'POST'});
-            for(let item of result){
-                this.filters.push({
-                    text:item.type,
-                    value:item.type
+            _.each(result,(item) => {
+                this.addFilter(this.filters,item,'type');
+            });
+            this.list = result;
+        },
+        addFilter(arr,obj,str,right,error){
+            if(!(_.find(arr,(key)=> key.value === obj[str]))){
+                arr.push({
+                    text:right ? (obj[str] ? right: error) : obj[str],
+                    value:obj[str]
                 });
             }
-            this.list = result;
         },
         edit(row) {
             this.$router.push({path:'/link/edit', query: { id: row._id }});
