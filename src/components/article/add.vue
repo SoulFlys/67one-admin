@@ -25,12 +25,6 @@
                 </el-form-item>
                 <el-form-item label="文章内容" prop="content">
                     <markdown v-model="form.content"></markdown>
-                    <!-- <el-col :span="12">
-                        <el-input type="textarea" v-model="form.content" @input="update" :autosize="{ minRows: 12}" placeholder="请输入文章内容（仅支持markdown语法）"></el-input>
-                    </el-col>
-                    <el-col :span="12" class="editormd">
-                        <div class="article-result md-preview markdown shrink" v-html="markdownResult"></div>
-                    </el-col> -->
                 </el-form-item>
                 <el-form-item label="文章标签" prop="tags">
                     <el-input v-model="form.tags" placeholder="请输入文章标签（多个以英文逗号隔开）"></el-input>
@@ -72,7 +66,7 @@ export default {
                 content: '',
                 tags: '',
                 delete: false,
-                status: true
+                status: false
             },
             rules: {
                 cid:  [{required: true, message: '请选择栏目',trigger: 'foucs'}],
@@ -85,7 +79,7 @@ export default {
     computed: {
         markdownResult: function() {
             return marked(this.form.content, {
-                sanitize: true
+                // sanitize: true
             })
         }
     },

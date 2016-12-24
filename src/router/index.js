@@ -10,6 +10,10 @@ const Index = [
     {
         path: "/trash",
         component: require('../components/trash/index')
+    },
+    {
+        path: "/basis",
+        component: require('../components/basis/index')
     }
 ]
 const Category = [
