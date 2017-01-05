@@ -6,7 +6,8 @@ const isObj = (obj) => {
 
 
 export const region = 'http://localhost:3000/67api'
-export const rootUrl = 'http://localhost:3000/'
+export const rootUrl = 'http://localhost:3000'
+export const imageUrl = 'http://localhost:3000/images/'
 
 export const fetchApi = (cfg) =>{
     if(!isObj(cfg)) return false;
