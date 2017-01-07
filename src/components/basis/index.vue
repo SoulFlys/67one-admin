@@ -49,7 +49,21 @@
                 <el-form-item label="github" prop="github">
                     <el-input v-model="form.github" placeholder="请输入github地址"></el-input>
                 </el-form-item>
-                <el-form-item label="聚焦一">
+                <el-form-item label="微信" prop="weixin">
+                    <el-input v-model="form.weixin" placeholder="请上传微信图片" :disabled="true"></el-input>
+                    <div class="operation"></div>
+                    <el-upload :action="action" type="drag"
+                        :multiple="false"
+                        :show-upload-list="false"
+                        :thumbnail-mode="true"
+                        :on-remove="weixinRemove"
+                        :on-success="weixinSuccess"
+                        :default-file-list="weixinList" class="weixin">
+                        <i class="el-icon-upload"></i>
+                        <div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
+                    </el-upload>
+                </el-form-item>
+                <!-- <el-form-item label="聚焦一">
                     <el-col :span="12">
                         <el-input v-model="form.focusTitle1" placeholder="请输入聚焦一的标题"></el-input>
                         <div class="operation"></div>
@@ -117,7 +131,7 @@
                             <div class="el-dragger__text">拖到此处，或<em>点击上传</em></div>
                         </el-upload>
                     </el-col>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="版权信息" prop="copyright">
                     <el-input v-model="form.copyright" placeholder="请输入版权信息"></el-input>
                 </el-form-item>
@@ -149,15 +163,16 @@ export default {
                 weibo:'',
                 qq:'',
                 github:'',
-                focusTitle1:'',
-                focusAid1:'',
-                focusPicUrl1:'',
-                focusTitle2:'',
-                focusAid2:'',
-                focusPicUrl2:'',
-                focusTitle3:'',
-                focusAid3:'',
-                focusPicUrl3:'',
+                weixin:'',
+                // focusTitle1:'',
+                // focusAid1:'',
+                // focusPicUrl1:'',
+                // focusTitle2:'',
+                // focusAid2:'',
+                // focusPicUrl2:'',
+                // focusTitle3:'',
+                // focusAid3:'',
+                // focusPicUrl3:'',
                 copyright:'',
                 record:'',
                 hits:''
@@ -179,14 +194,14 @@ export default {
         }
     },
     mounted() {
-        // this.getList();
-        this.getArticles();
+        this.getList();
+        // this.getArticles();
     },
     methods: {
-        async getArticles(){
-            let result = await api({url:'/admin/article', method:'POST'});
-            this.articles = result;
-        },
+        // async getArticles(){
+        //     let result = await api({url:'/admin/article', method:'POST'});
+        //     this.articles = result;
+        // },
         async getList() {
             let result = await api({url:'/admin/basis', method:'POST'});
             this.isUpdate = result.length > 0 ? true : false;
@@ -213,8 +228,6 @@ export default {
         },
         async add(){
             let data = _.clone(this.form);
-            console.log(data);
-            return false;
             let result = await api({url:'/admin/basis/add', data:data, method:'post'});
             if(result.status === 'ok'){
                 this.$message({
@@ -285,39 +298,39 @@ export default {
             file.newUrl = response.url;
             this.form.weixin = response.path;
         },
-        focus1Remove(file, fileList) {
-            api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
-            this.form.focusPicUrl1 = '';
-        },
-        focus1Success(response, file, fileList){
-            file.id = response.id;
-            file.newName = response.name;
-            file.path = response.path;
-            file.newUrl = response.url;
-            this.form.focusPicUrl1 = response.path;
-        },
-        focus2Remove(file, fileList) {
-            api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
-            this.form.focusPicUrl2 = '';
-        },
-        focus2Success(response, file, fileList){
-            file.id = response.id;
-            file.newName = response.name;
-            file.path = response.path;
-            file.newUrl = response.url;
-            this.form.focusPicUrl2 = response.path;
-        },
-        focus3Remove(file, fileList) {
-            api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
-            this.form.focusPicUrl3 = '';
-        },
-        focus3Success(response, file, fileList){
-            file.id = response.id;
-            file.newName = response.name;
-            file.path = response.path;
-            file.newUrl = response.url;
-            this.form.focusPicUrl3 = response.path;
-        }
+        // focus1Remove(file, fileList) {
+        //     api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
+        //     this.form.focusPicUrl1 = '';
+        // },
+        // focus1Success(response, file, fileList){
+        //     file.id = response.id;
+        //     file.newName = response.name;
+        //     file.path = response.path;
+        //     file.newUrl = response.url;
+        //     this.form.focusPicUrl1 = response.path;
+        // },
+        // focus2Remove(file, fileList) {
+        //     api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
+        //     this.form.focusPicUrl2 = '';
+        // },
+        // focus2Success(response, file, fileList){
+        //     file.id = response.id;
+        //     file.newName = response.name;
+        //     file.path = response.path;
+        //     file.newUrl = response.url;
+        //     this.form.focusPicUrl2 = response.path;
+        // },
+        // focus3Remove(file, fileList) {
+        //     api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
+        //     this.form.focusPicUrl3 = '';
+        // },
+        // focus3Success(response, file, fileList){
+        //     file.id = response.id;
+        //     file.newName = response.name;
+        //     file.path = response.path;
+        //     file.newUrl = response.url;
+        //     this.form.focusPicUrl3 = response.path;
+        // }
     }
 }
 </script>

@@ -118,6 +118,9 @@ export default {
         },
         staFiltersMethod(value, row) {
             return row.status === value;
+        },
+        edit(row){
+            this.$router.push({path:'/article/edit', query: { id: row._id }});
         }
     }
 }

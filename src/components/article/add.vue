@@ -18,7 +18,18 @@
                     <el-input v-model="form.title" placeholder="请输入文章标题"></el-input>
                 </el-form-item>
                 <el-form-item label="文章主图" prop="image">
-                    <el-input v-model="form.image" placeholder="请上传文章主图"></el-input>
+                    <el-input v-model="form.image" placeholder="请上传文章主图" :disabled="true"></el-input>
+                    <div class="operation"></div>
+                    <el-upload :action="action" type="drag"
+                        :multiple="false"
+                        :show-upload-list="false"
+                        :thumbnail-mode="true"
+                        :on-remove="remove"
+                        :on-success="success"
+                        :default-file-list="list" class="weixin">
+                        <i class="el-icon-upload"></i>
+                        <div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
+                    </el-upload>
                 </el-form-item>
                 <el-form-item label="单页设置" prop="alone">
                     <el-switch on-text="是" off-text="否" v-model="form.alone"></el-switch>
@@ -74,6 +85,8 @@ export default {
                 content: [{required: true, message: '请输入文章内容',trigger: 'foucs'}]
             },
             markdownResult: '',
+            list:[],
+            action: region + '/admin/file/add',
         }
     },
     computed: {

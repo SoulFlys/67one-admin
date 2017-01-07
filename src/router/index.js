@@ -68,10 +68,24 @@ const Link = [
         component: require('../components/link/edit')
     }
 ]
+const Focus = [
+    {
+        path: '/focus',
+        component: require('../components/focus')
+    },
+    {
+        path: '/focus/add',
+        component: require('../components/focus/add')
+    },
+    {
+        path: '/focus/edit',
+        component: require('../components/focus/edit')
+    }
+]
 
 export default new VueRouter({
     mode: 'history',
     scrollBehavior: () => ({y: 0}),
     linkActiveClass: 'nav-li-hover',
-    routes: Index.concat(Category, Article, File, Link)
+    routes: Index.concat(Category, Article, File, Link, Focus)
 })

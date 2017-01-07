@@ -13,6 +13,7 @@
             <li><router-link to='/trash'>回收站管理</router-link></li>
             <li class="nav-li">网站设置</li>
             <li><router-link to='/category'>栏目管理</router-link></li>
+            <li><router-link to='/focus'>聚焦管理</router-link></li>
             <li><router-link to='/file'>文件管理</router-link></li>
             <li><router-link to='/link'>友情链接</router-link></li>
             <li><router-link to='/basis'>基本信息</router-link></li>
