@@ -61,9 +61,12 @@ export default {
             form:{},
             rules:{},
             markdownResult:'',
+            list:[],
+            action: region + '/admin/file/add',
         }
     },
     mounted(){
+        this.getCategory();
         let id = this.$route.query.id;
         if(id) this.findById(id);
     },
@@ -71,6 +74,10 @@ export default {
         async findById(id){
             let result = await api({url:'/admin/Article/findById', data:{id:id}, method:'POST'});
             console.log(result);
+        },
+        async getCategory() {
+            let result = await api({url:'/admin/category', method:'POST'});
+            this.category = result;
         },
     }
 }

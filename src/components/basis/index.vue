@@ -63,75 +63,6 @@
                         <div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
                     </el-upload>
                 </el-form-item>
-                <!-- <el-form-item label="聚焦一">
-                    <el-col :span="12">
-                        <el-input v-model="form.focusTitle1" placeholder="请输入聚焦一的标题"></el-input>
-                        <div class="operation"></div>
-                        <el-select v-model="form.focusAid1" placeholder="请选择对应文章">
-                            <el-option v-for="item in articles" :label="item.title" :value="item._id" ></el-option>
-                        </el-select>
-                        <div class="operation"></div>
-                        <el-input v-model="form.focusPicUrl1" placeholder="请在右方上传聚焦一的图片" :disabled="true"></el-input>
-                    </el-col>
-                    <el-col :span="11" :offset="1">
-                        <el-upload :action="action" type="drag"
-                            :multiple="false"
-                            :show-upload-list="false"
-                            :thumbnail-mode="true"
-                            :on-remove="focus1Remove"
-                            :on-success="focus1Success"
-                            :default-file-list="focus1List" class="pic">
-                            <i class="el-icon-upload"></i>
-                            <div class="el-dragger__text">拖到此处，或<em>点击上传</em></div>
-                        </el-upload>
-                    </el-col>
-                </el-form-item>
-                <el-form-item label="聚焦二">
-                    <el-col :span="12">
-                        <el-input v-model="form.focusTitle2" placeholder="请输入聚焦一的标题"></el-input>
-                        <div class="operation"></div>
-                        <el-select v-model="form.focusAid2" placeholder="请选择对应文章">
-                            <el-option v-for="item in articles" :label="item.title" :value="item._id" ></el-option>
-                        </el-select>
-                        <div class="operation"></div>
-                        <el-input v-model="form.focusPicUrl2" placeholder="请在右方上传聚焦一的图片" :disabled="true"></el-input>
-                    </el-col>
-                    <el-col :span="11" :offset="1">
-                        <el-upload :action="action" type="drag"
-                            :multiple="false"
-                            :show-upload-list="false"
-                            :thumbnail-mode="true"
-                            :on-remove="focus2Remove"
-                            :on-success="focus2Success"
-                            :default-file-list="focus2List" class="pic">
-                            <i class="el-icon-upload"></i>
-                            <div class="el-dragger__text">拖到此处，或<em>点击上传</em></div>
-                        </el-upload>
-                    </el-col>
-                </el-form-item>
-                <el-form-item label="聚焦三">
-                    <el-col :span="12">
-                        <el-input v-model="form.focusTitle3" placeholder="请输入聚焦一的标题"></el-input>
-                        <div class="operation"></div>
-                        <el-select v-model="form.focusAid3" placeholder="请选择对应文章">
-                            <el-option v-for="item in articles" :label="item.title" :value="item._id" ></el-option>
-                        </el-select>
-                        <div class="operation"></div>
-                        <el-input v-model="form.focusPicUrl3" placeholder="请在右方上传聚焦一的图片" :disabled="true"></el-input>
-                    </el-col>
-                    <el-col :span="11" :offset="1">
-                        <el-upload :action="action" type="drag"
-                            :multiple="false"
-                            :show-upload-list="false"
-                            :thumbnail-mode="true"
-                            :on-remove="focus3Remove"
-                            :on-success="focus3Success"
-                            :default-file-list="focus3List" class="pic">
-                            <i class="el-icon-upload"></i>
-                            <div class="el-dragger__text">拖到此处，或<em>点击上传</em></div>
-                        </el-upload>
-                    </el-col>
-                </el-form-item> -->
                 <el-form-item label="版权信息" prop="copyright">
                     <el-input v-model="form.copyright" placeholder="请输入版权信息"></el-input>
                 </el-form-item>
@@ -164,15 +95,6 @@ export default {
                 qq:'',
                 github:'',
                 weixin:'',
-                // focusTitle1:'',
-                // focusAid1:'',
-                // focusPicUrl1:'',
-                // focusTitle2:'',
-                // focusAid2:'',
-                // focusPicUrl2:'',
-                // focusTitle3:'',
-                // focusAid3:'',
-                // focusPicUrl3:'',
                 copyright:'',
                 record:'',
                 hits:''
@@ -195,13 +117,8 @@ export default {
     },
     mounted() {
         this.getList();
-        // this.getArticles();
     },
     methods: {
-        // async getArticles(){
-        //     let result = await api({url:'/admin/article', method:'POST'});
-        //     this.articles = result;
-        // },
         async getList() {
             let result = await api({url:'/admin/basis', method:'POST'});
             this.isUpdate = result.length > 0 ? true : false;
@@ -298,39 +215,6 @@ export default {
             file.newUrl = response.url;
             this.form.weixin = response.path;
         },
-        // focus1Remove(file, fileList) {
-        //     api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
-        //     this.form.focusPicUrl1 = '';
-        // },
-        // focus1Success(response, file, fileList){
-        //     file.id = response.id;
-        //     file.newName = response.name;
-        //     file.path = response.path;
-        //     file.newUrl = response.url;
-        //     this.form.focusPicUrl1 = response.path;
-        // },
-        // focus2Remove(file, fileList) {
-        //     api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
-        //     this.form.focusPicUrl2 = '';
-        // },
-        // focus2Success(response, file, fileList){
-        //     file.id = response.id;
-        //     file.newName = response.name;
-        //     file.path = response.path;
-        //     file.newUrl = response.url;
-        //     this.form.focusPicUrl2 = response.path;
-        // },
-        // focus3Remove(file, fileList) {
-        //     api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
-        //     this.form.focusPicUrl3 = '';
-        // },
-        // focus3Success(response, file, fileList){
-        //     file.id = response.id;
-        //     file.newName = response.name;
-        //     file.path = response.path;
-        //     file.newUrl = response.url;
-        //     this.form.focusPicUrl3 = response.path;
-        // }
     }
 }
 </script>

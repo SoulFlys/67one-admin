@@ -63,7 +63,18 @@ export default {
     },
     computed: {
         compiledMarkdown() {
-            return marked(this.value);
+            return marked(this.value ,{
+                gfm: true,
+                tables: true,
+                breaks: false,
+                pedantic: false,
+                sanitize: false,
+                smartLists: true,
+                smartypants: false,
+                highlight (code, lang) {
+                    return require('highlight.js').highlight(lang, code).value
+                }
+            });
         }
     },
     methods: {
@@ -210,6 +221,8 @@ export default {
 <style lang="scss">
 @import '../../assets/scss/functions.scss';
 @import "../../assets/css/github-markdown.css";
+@import "../../assets/css/atom-one-light.css";
+
 .editor{
     border: 1px solid #ccc;
     border-radius: 3px;

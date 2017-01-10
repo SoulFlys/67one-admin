@@ -59,7 +59,7 @@
 <script>
 import marked from 'marked'
 import _ from 'lodash'
-import {fetchApi as api} from '../../api'
+import {fetchApi as api,region} from '../../api'
 import Markdown from './markdown.vue'
 
 export default {
@@ -72,7 +72,7 @@ export default {
             form: {
                 cid: '',
                 title: '',
-                image: 'http://localhost:3000/2016.12.22.16.21.24.30.jpg',
+                image: '',
                 alone: false,
                 content: '',
                 tags: '',
@@ -92,8 +92,17 @@ export default {
     computed: {
         markdownResult: function() {
             return marked(this.form.content, {
-                // sanitize: true
-            })
+                gfm: true,
+                tables: true,
+                breaks: false,
+                pedantic: false,
+                sanitize: false,
+                smartLists: true,
+                smartypants: false,
+                highlight (code, lang) {
+                    return require('highlight.js').highlight(lang, code).value
+                }
+            });
         }
     },
     mounted() {
@@ -101,7 +110,6 @@ export default {
     },
     methods: {
         submit() {
-            console.log(this.form);
             console.log(this.markdownResult);
             this.$refs.form.validate((valid) => {
                 return valid ? this.add() : false;
@@ -136,7 +144,18 @@ export default {
                 });
                 console.log('result',result);
             }
-        }
+        },
+        remove(file, fileList){
+            api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
+            this.form.image = '';
+        },
+        success(response, file, fileList){
+            file.id = response.id;
+            file.newName = response.name;
+            file.path = response.path;
+            file.newUrl = response.url;
+            this.form.image = response.path;
+        },
     }
 }
 </script>
