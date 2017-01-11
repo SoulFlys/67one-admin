@@ -82,7 +82,7 @@
 
 <script>
 import {fetchApi as api, region, rootUrl} from '../../api'
-
+import _ from 'lodash'
 export default {
     name: 'basis',
     data() {

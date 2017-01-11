@@ -71,8 +71,8 @@ export default {
                 sanitize: false,
                 smartLists: true,
                 smartypants: false,
-                highlight (code, lang) {
-                    return require('highlight.js').highlight(lang, code).value
+                highlight (code) {
+                    return require('highlight.js').highlightAuto(code).value;
                 }
             });
         }

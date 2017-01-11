@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 const Index = [
     {
         path: "/",
-        component: require('../components/index')
+        component: require('../components/pages/index')
     },
     {
         path: "/trash",
@@ -82,10 +82,34 @@ const Focus = [
         component: require('../components/focus/edit')
     }
 ]
+const Admin = [
+    {
+        path: '/admin',
+        component: require('../components/admin')
+    },
+    {
+        path: '/admin/add',
+        component: require('../components/admin/add')
+    },
+    {
+        path: '/admin/edit',
+        component: require('../components/admin/edit')
+    }
+]
 
 export default new VueRouter({
     mode: 'history',
     scrollBehavior: () => ({y: 0}),
     linkActiveClass: 'nav-li-hover',
-    routes: Index.concat(Category, Article, File, Link, Focus)
+    routes: [
+        {
+            path: "/",
+            component: require('components/index'),
+            children: Index.concat(Category, Article, File, Link, Focus, Admin)
+        },
+        {
+            path: "/login",
+            component: require('components/pages/login'),
+        }
+    ]
 })

@@ -19,8 +19,8 @@
             <el-table-column prop="name" label="栏目" width="120" :filters="catFilters" :filter-method="catFiltersMethod"></el-table-column>
             <el-table-column inline-template label="标题" min-width="200">
                 <el-tooltip placement="top">
-                    <div slot="content" class="article-title-img">
-                        <img :src="row.image" alt="" width="100%">
+                    <div slot="content" class="article-title-img" v-if="row.image">
+                        <img :src="rootUrl + row.image" alt="" width="100%">
                     </div>
                     <p>{{row.title}}</p>
                 </el-tooltip>
@@ -35,12 +35,12 @@
                     <el-tag type="danger" v-else>否</el-tag>
                 </div>
             </el-table-column>
-            <el-table-column inline-template prop="delete" label="在回收站" width="120" :filters="delFilters" :filter-method="delFiltersMethod">
+            <!-- <el-table-column inline-template prop="delete" label="在回收站" width="120" :filters="delFilters" :filter-method="delFiltersMethod">
                 <div>
                     <el-tag type="danger" v-if="row.delete">在</el-tag>
                     <el-tag type="success" v-else>不在</el-tag>
                 </div>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column inline-template prop="status" label="状态" width="100" :filters="staFilters" :filter-method="staFiltersMethod">
                 <div>
                     <el-tag type="success" v-if="row.status">启用</el-tag>
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import {fetchApi as api} from '../../api'
+import {fetchApi as api,rootUrl} from '../../api'
 import _ from 'lodash'
 export default {
     name: 'article',
@@ -70,7 +70,8 @@ export default {
             list: [],
             delFilters: [],
             catFilters: [],
-            staFilters: []
+            staFilters: [],
+            rootUrl:rootUrl
         }
     },
     mounted() {
@@ -85,9 +86,10 @@ export default {
         },
         async getList() {
             let result = await api({url:'/admin/article', method:'POST'});
+            result = _.filter(result,(item)=> !item.delete);
             _.filter(result,(item)=> item.name = item.cid.name);
             _.each(result,(item) => {
-                this.addFilter(this.delFilters,item,'delete','在','不在');
+                // this.addFilter(this.delFilters,item,'delete','在','不在');
                 this.addFilter(this.catFilters,item,'name');
                 this.addFilter(this.staFilters,item,'status','启用','禁用');
             });
@@ -110,9 +112,9 @@ export default {
                 this.$message({showClose: true,message: '加入回收站失败',type: 'error'});
             }
         },
-        delFiltersMethod(value, row) {
-            return row.delete === value;
-        },
+        // delFiltersMethod(value, row) {
+        //     return row.delete === value;
+        // },
         catFiltersMethod(value, row) {
             return row.name === value;
         },

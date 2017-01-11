@@ -34,6 +34,9 @@
                 <el-form-item label="单页设置" prop="alone">
                     <el-switch on-text="是" off-text="否" v-model="form.alone"></el-switch>
                 </el-form-item>
+                <el-form-item label="文章描述" prop="description">
+                    <el-input  v-model="form.description" placeholder="请输入文章描述" type="textarea" :autosize="{ minRows: 3, maxRows: 6}"></el-input>
+                </el-form-item>
                 <el-form-item label="文章内容" prop="content">
                     <markdown v-model="form.content"></markdown>
                 </el-form-item>
@@ -74,6 +77,7 @@ export default {
                 title: '',
                 image: '',
                 alone: false,
+                description:'',
                 content: '',
                 tags: '',
                 delete: false,
@@ -89,28 +93,30 @@ export default {
             action: region + '/admin/file/add',
         }
     },
-    computed: {
-        markdownResult: function() {
-            return marked(this.form.content, {
-                gfm: true,
-                tables: true,
-                breaks: false,
-                pedantic: false,
-                sanitize: false,
-                smartLists: true,
-                smartypants: false,
-                highlight (code, lang) {
-                    return require('highlight.js').highlight(lang, code).value
-                }
-            });
-        }
-    },
+    // computed: {
+    //     markdownResult: function() {
+    //
+    //         return this.form.content;
+    //         // return marked(this.form.content, {
+    //         //     gfm: true,
+    //         //     tables: true,
+    //         //     breaks: false,breaks: true,  // '>' 换行，回车换成 <br>
+    //         //     pedantic: false,
+    //         //     sanitize: false,
+    //         //     smartLists: true,
+    //         //     smartypants: false,
+    //         //     highlight (code) {
+    //         //         return require('highlight.js').highlightAuto(code).value;
+    //         //     }
+    //         // });
+    //     }
+    // },
     mounted() {
         this.getCategory();
     },
     methods: {
         submit() {
-            console.log(this.markdownResult);
+            console.log(this.form.content)
             this.$refs.form.validate((valid) => {
                 return valid ? this.add() : false;
             })
@@ -118,16 +124,17 @@ export default {
         goback() {
             this.$router.go(-1);
         },
-        reset() {},
+        reset() {
+            this.$refs.form.resetFields();
+        },
         async getCategory() {
             let result = await api({url:'/admin/category', method:'POST'});
             this.category = result;
         },
         async add() {
             let data = _.clone(this.form);
-            data.content = this.markdownResult;
+            // data.content = this.markdownResult;
             data.tags = _.filter(data.tags.split(','), (item) => item != '');
-            data.description = '这是临时的描述';
             let result = await api({url:'/admin/article/add', data:data, method:'post'});
             if(result.status === 'ok'){
                 this.$message({

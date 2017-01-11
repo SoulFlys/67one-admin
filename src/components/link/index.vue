@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import {fetchApi as api} from '../../api'
-
+import {fetchApi as api, rootUrl} from '../../api'
+import _ from 'lodash'
 export default {
     name: 'link',
     data() {
