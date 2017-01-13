@@ -34,7 +34,7 @@
         <el-table-column label="操作" inline-template align="center">
             <div>
                 <el-button type="warning" size="small" icon="edit" @click="edit(row)"></el-button>
-                <el-button type="danger" size="small" icon="delete" @click="remove(row)"></el-button>
+                <el-button type="danger" size="small" icon="delete" v-if="row.username !== 'xiaofang'" @click="remove(row)"></el-button>
             </div>
         </el-table-column>
     </el-table>
@@ -76,7 +76,7 @@ export default {
             this.$router.push({path:'/admin/edit', query: { id: row._id }});
         },
         remove(row){
-            this.$confirm(`是否删除【${row.name}】的友情链接?`, '提示', {
+            this.$confirm(`是否删除【${row.username}】？`, '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'

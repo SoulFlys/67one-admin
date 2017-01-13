@@ -278,7 +278,7 @@ export default {
         }
         &.preview {
             .editor-textarea {width: 50%;}
-            .md-preview {
+            .markdown {
                 left: 0;
                 width: 100%;
                 border-left-style: none;

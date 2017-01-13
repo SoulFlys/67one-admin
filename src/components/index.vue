@@ -1,9 +1,12 @@
 <template>
 <div class="index">
     <header>
-        <span>时光笑我温暖如阳</span>
+        <span>{{name}}</span>
         <router-link to='/'>博客管理后台</router-link>
-        <a href="#">网站主页</a>
+        <div>
+            <a href="#" @click.stop.prevent="logout">退出</a>
+            <a href="#">网站主页</a>
+        </div>
     </header>
     <nav>
         <ul>
@@ -29,8 +32,29 @@
 </template>
 
 <script>
+import Cookie from 'vue-cookie'
 export default {
-    name: 'index'
+    name: 'index',
+    data(){
+        return {
+            name:''
+        }
+    },
+    mounted(){
+        let names = JSON.parse(Cookie.get('token67'));
+        this.name = names.nickname || names.realname || name.username;
+    },
+    methods:{
+        logout(){
+            Cookie.delete('token67');
+            this.$message({
+               showClose: true,
+               message: '退出成功',
+               type: 'success'
+            });
+            this.$router.push('/login');
+        }
+    }
 }
 </script>
 

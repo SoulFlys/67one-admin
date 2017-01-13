@@ -25,6 +25,7 @@
 <script>
 import {fetchApi as api, rootUrl} from '../../api'
 import _ from 'lodash'
+import Cookie from 'vue-cookie'
 export default {
     name: 'login',
     data() {
@@ -32,7 +33,7 @@ export default {
             checked: true,
             form: {
                 username: 'xiaofang',
-                password: 'Dear110..'
+                password: ''
             },
             rules: {
                 username: [{
@@ -76,11 +77,8 @@ export default {
             let data = _.clone(this.form);
             let result = await api({url:'/admin/admin/login', data:data, method:'post'});
             if(result.status === 'ok'){
-                this.$message({
-                    showClose: true,
-                    message: '登陆成功',
-                    type: 'success'
-                });
+                let time = this.checked ? '24h' : '2h';
+                Cookie.set('token67',JSON.stringify(result.data), { expires: time });
                 this.$router.push('/');
             }else{
                 this.$message({

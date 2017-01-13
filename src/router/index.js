@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Cookie from 'vue-cookie'
 Vue.use(VueRouter)
 
 const Index = [
@@ -97,7 +98,7 @@ const Admin = [
     }
 ]
 
-export default new VueRouter({
+const router = new VueRouter({
     mode: 'history',
     scrollBehavior: () => ({y: 0}),
     linkActiveClass: 'nav-li-hover',
@@ -113,3 +114,19 @@ export default new VueRouter({
         }
     ]
 })
+
+router.beforeEach((to, from, next) => {
+    //判断当前用户是否登录
+    let token67 = Cookie.get('token67');
+    if(token67){
+        next();
+    }else{
+        if(to.path === '/login' || to.path === '/reset'){
+            next();
+        }else{
+            next({path: '/login'});
+        }
+    }
+})
+
+export default router;
