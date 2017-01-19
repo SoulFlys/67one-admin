@@ -96,7 +96,7 @@ export default {
         async update() {
             let data = _.clone(this.form);
                 data.id = this.$route.query.id;
-                data.pid = data.pid || 0;
+                data.pid = (data.pid === "0" || data.pid ==="")  ? 0 :data.pid;
                 data.level = data.pid ? 2 : 1;
             let result = await api({url:'/admin/category/update', data:data, method:'PUT'});
             // console.log(result);

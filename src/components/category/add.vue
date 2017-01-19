@@ -87,7 +87,7 @@ export default {
         },
         async add() {
             let data = _.clone(this.form);
-                data.pid = data.pid || 0;
+                data.pid = (data.pid === "0" || data.pid ==="")  ? 0 :data.pid;
                 data.level = data.pid ? 2 : 1;
             let result = await api({url:'/admin/category/add', data:data, method:'post'});
             if(result.status === 'ok'){
