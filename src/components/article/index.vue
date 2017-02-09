@@ -87,6 +87,7 @@ export default {
         async getList() {
             let result = await api({url:'/admin/article', method:'POST'});
             result = _.filter(result,(item)=> !item.delete);
+            console.log(_.clone(result))
             _.filter(result,(item)=> item.name = item.cid.name);
             _.each(result,(item) => {
                 // this.addFilter(this.delFilters,item,'delete','在','不在');
