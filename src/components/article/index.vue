@@ -85,9 +85,13 @@ export default {
             this.getList();
         },
         async getList() {
+            // let result1 = await api({url:'/blog/article', method:'POST',data:{currentPage:1,pageSize:5,cid:'58a16a1fa8a29222188375b8'}});
+            // console.log(_.clone(result1))
+
+
             let result = await api({url:'/admin/article', method:'POST'});
             result = _.filter(result,(item)=> !item.delete);
-            console.log(_.clone(result))
+            // console.log(_.clone(result))
             _.filter(result,(item)=> item.name = item.cid.name);
             _.each(result,(item) => {
                 // this.addFilter(this.delFilters,item,'delete','在','不在');

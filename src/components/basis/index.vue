@@ -63,6 +63,24 @@
                         <div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
                     </el-upload>
                 </el-form-item>
+                <el-form-item label="banner" prop="banner">
+                    <el-input v-model="form.banner" placeholder="请上传banner图片" :disabled="true"></el-input>
+                    <div class="operation"></div>
+                    <el-upload :action="action" type="drag"
+                        :multiple="false"
+                        :show-upload-list="false"
+                        :thumbnail-mode="true"
+                        :on-remove="bannerRemove"
+                        :on-success="bannerSuccess"
+                        :default-file-list="bannerList" class="banner">
+                        <i class="el-icon-upload"></i>
+                        <div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="公告" prop="tip">
+                    <el-input type="textarea" :rows="3" v-model="form.tip" placeholder="请输入公告"></el-input>
+                </el-form-item>
+
                 <el-form-item label="版权信息" prop="copyright">
                     <el-input v-model="form.copyright" placeholder="请输入版权信息"></el-input>
                 </el-form-item>
@@ -95,6 +113,8 @@ export default {
                 qq:'',
                 github:'',
                 weixin:'',
+                banner:'',
+                tip: '',
                 copyright:'',
                 record:'',
                 hits:''
@@ -102,6 +122,7 @@ export default {
             rules: {
                 logo: [{required: true, message: '请输入网站logo地址',trigger: 'foucs'}],
                 pic: [{required: true, message: '请输入博主头像地址',trigger: 'foucs'}],
+                banner: [{required: true, message: '请输入banner地址',trigger: 'foucs'}],
                 nick: [{required: true, message: '博主昵称',trigger: 'foucs'}],
                 copyright: [{required: true, message: '请输入版权信息',trigger: 'foucs'}],
                 record: [{required: true, message: '请输入备案号',trigger: 'foucs'}]
@@ -111,6 +132,7 @@ export default {
             logoList:[],
             picList:[],
             weixinList:[],
+            bannerList:[],
             action: region + '/admin/file/add',
             articles:[]
         }
@@ -135,6 +157,10 @@ export default {
             this.weixinList = [{
                 name:'weixin',
                 url: rootUrl + this.form.weixin
+            }];
+            this.bannerList = [{
+                name:'banner',
+                url: rootUrl + this.form.banner
             }];
         },
         submit() {
@@ -215,6 +241,17 @@ export default {
             file.newUrl = response.url;
             this.form.weixin = response.path;
         },
+        bannerRemove(file, fileList) {
+            api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
+            this.form.banner = '';
+        },
+        bannerSuccess(response, file, fileList){
+            file.id = response.id;
+            file.newName = response.name;
+            file.path = response.path;
+            file.newUrl = response.url;
+            this.form.banner = response.path;
+        },
     }
 }
 </script>
@@ -223,6 +260,9 @@ export default {
 .basis{
     .pic,.weixin,.logo{
         width:150px;
+        height:150px;
+    }
+    .banner{
         height:150px;
     }
 }

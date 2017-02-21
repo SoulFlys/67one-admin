@@ -86,6 +86,7 @@ export default {
             rules: {
                 cid:  [{required: true, message: '请选择栏目',trigger: 'foucs'}],
                 title: [{required: true, message: '请输入文章标题',trigger: 'foucs'}],
+                description: [{required: true, message: '请输入文章描述',trigger: 'foucs'}],
                 content: [{required: true, message: '请输入文章内容',trigger: 'foucs'}]
             },
             markdownResult: '',
