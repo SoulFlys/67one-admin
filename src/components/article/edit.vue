@@ -34,6 +34,9 @@
             <el-form-item label="单页设置" prop="alone">
                 <el-switch on-text="是" off-text="否" v-model="form.alone"></el-switch>
             </el-form-item>
+            <el-form-item label="文章描述" prop="description">
+                <el-input  v-model="form.description" placeholder="请输入文章描述" type="textarea" :autosize="{ minRows: 3, maxRows: 6}"></el-input>
+            </el-form-item>
             <el-form-item label="文章内容" prop="content">
                 <markdown v-model="form.content"></markdown>
             </el-form-item>
@@ -83,6 +86,7 @@ export default {
             rules:{
                 cid:  [{required: true, message: '请选择栏目',trigger: 'foucs'}],
                 title: [{required: true, message: '请输入文章标题',trigger: 'foucs'}],
+                description: [{required: true, message: '请输入文章描述',trigger: 'foucs'}],
                 content: [{required: true, message: '请输入文章内容',trigger: 'foucs'}]
             },
             markdownResult:'',
