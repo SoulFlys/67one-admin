@@ -146,22 +146,30 @@ export default {
             this.isUpdate = result.length > 0 ? true : false;
             this.form = result[0] || {};
             this.id = result[0] ? result[0]._id || '' : '';
-            this.logoList = [{
-                name:'logo',
-                url: rootUrl + this.form.logo
-            }];
-            this.picList = [{
-                name:'pic',
-                url: rootUrl + this.form.pic
-            }];
-            this.weixinList = [{
-                name:'weixin',
-                url: rootUrl + this.form.weixin
-            }];
-            this.bannerList = [{
-                name:'banner',
-                url: rootUrl + this.form.banner
-            }];
+            if(this.form.logo){
+                this.logoList = [{
+                    name:'logo',
+                    url: rootUrl + this.form.logo
+                }];
+            }
+            if(this.form.pic){
+                this.picList = [{
+                    name:'pic',
+                    url: rootUrl + this.form.pic
+                }]; 
+            }
+            if(this.form.weixin){
+                this.weixinList = [{
+                    name:'weixin',
+                    url: rootUrl + this.form.weixin
+                }];    
+            }
+            if(this.form.banner){
+               this.bannerList = [{
+                    name:'banner',
+                    url: rootUrl + this.form.banner
+                }]; 
+            }  
         },
         submit() {
             this.$refs.form.validate((valid) => {

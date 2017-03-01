@@ -22,7 +22,7 @@
             </el-table-column>
             <el-table-column prop="name" label="名称" min-width="120"></el-table-column>
             <el-table-column inline-template label="地址" min-width="120">
-                <a :href="row.href" target="_blank">{{row.href}}</span>
+                <a :href="row.href" target="_blank">{{row.href}}</a>
             </el-table-column>
             <el-table-column inline-template label="状态" width="80">
                 <div>

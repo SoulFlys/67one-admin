@@ -127,6 +127,7 @@ router.beforeEach((to, from, next) => {
             next({path: '/login'});
         }
     }
+    next()
 })
 
 export default router;
