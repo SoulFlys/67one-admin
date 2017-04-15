@@ -1,18 +1,24 @@
 # 67one-admin
 
-> A Vue.js project
+> 67one-blog的后台管理系统
+
+## 前置
+* 67-api https://github.com/SoulFlys/67-api
 
 ## Build Setup
 
-``` bash
-# install dependencies
-npm install
+``` shell
+# 安装依赖
+$ npm install
 
-# serve with hot reload at localhost:8888
-npm run dev
+# 或者
+$ yarn
 
-# build for production with minification
-npm run build
+# 开发模式
+$ npm run dev
+
+# 生产模式
+$ npm run build
 ```
 
 # TODO
@@ -23,6 +29,9 @@ npm run build
   - [x] 文件管理
   - [x] 友情链接
   - [x] 网站配置
+  - [ ] 图片上传（七牛云）
   - [ ] 评论方案
   - [x] 后台登陆
-  - [ ] 优化(统计、)
+  - [ ] 优化      
+  - [ ] 界面优化
+  - [ ] 程序优化

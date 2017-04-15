@@ -4,7 +4,6 @@ const isObj = (obj) => {
     return obj && Object.prototype.toString.call(obj) === '[object Object]';
 }
 
-
 export const region = 'http://localhost:3000/67api'
 export const rootUrl = 'http://localhost:3000'
 export const imageUrl = 'http://localhost:3000/images/'

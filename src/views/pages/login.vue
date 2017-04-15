@@ -78,7 +78,7 @@ export default {
             let result = await api({url:'/admin/admin/login', data:data, method:'post'});
             if(result.status === 'ok'){
                 let time = this.checked ? '24h' : '2h';
-                Cookie.set('token67',JSON.stringify(result.data), { expires: time });
+                Cookie.set('token',JSON.stringify(result.data), { expires: time });
                 this.$router.push('/');
             }else{
                 this.$message({

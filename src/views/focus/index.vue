@@ -1,8 +1,8 @@
 <template lang="html">
-<div class="admin">
+<div class="focus">
     <el-breadcrumb separator="/" class="breadcrumb">
         <el-breadcrumb-item to="/">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>管理员列表</el-breadcrumb-item>
+        <el-breadcrumb-item>聚焦管理</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="operation">
         <div class="operation-condition"></div>
@@ -13,15 +13,15 @@
     </div>
     <el-table :data="list" border style="width: 100%">
         <el-table-column inline-template label="更新日期" width="150">
-            <span>{{row.meta.updateAt | formatDate}}</span>
+            <span>{{row.updateAt | formatDate}}</span>
         </el-table-column>
+        <el-table-column prop="sort" label="排序" sortable width="100"></el-table-column>
         <el-table-column prop="_id" label="_ID" width="210"></el-table-column>
-        <el-table-column prop="username" label="用户名"></el-table-column>
-        <el-table-column prop="nickname" label="昵称"></el-table-column>
-        <el-table-column prop="realname" label="真实姓名"></el-table-column>
-        <el-table-column prop="createip" label="创建IP"></el-table-column>
-        <el-table-column prop="lastloginip" label="最后一次登录的ip"></el-table-column>
-        <el-table-column prop="lastlogintime" label="最后登录时间"></el-table-column>
+        <el-table-column prop="title" label="标题" min-width="120"></el-table-column>
+        <el-table-column inline-template label="聚焦图片" width="100">
+             <img :src="rootUrl + row.pic" alt="">
+         </el-table-column>
+        <el-table-column prop="articleId.title" label="文章" min-width="120"></el-table-column>
         <el-table-column inline-template label="状态" width="80">
             <div>
                 <el-tag type="success" v-if="row.status">启用</el-tag>
@@ -29,12 +29,12 @@
             </div>
         </el-table-column>
         <el-table-column inline-template label="创建时间" width="150">
-            <span>{{row.meta.createAt | formatDate}}</span>
+            <span>{{row.createAt | formatDate}}</span>
         </el-table-column>
         <el-table-column label="操作" inline-template align="center">
             <div>
                 <el-button type="warning" size="small" icon="edit" @click="edit(row)"></el-button>
-                <el-button type="danger" size="small" icon="delete" v-if="row.username !== 'xiaofang'" @click="remove(row)"></el-button>
+                <el-button type="danger" size="small" icon="delete" @click="remove(row)"></el-button>
             </div>
         </el-table-column>
     </el-table>
@@ -45,38 +45,33 @@
 import {fetchApi as api, rootUrl} from '../../api'
 import _ from 'lodash'
 export default {
-    data(){
+    name: 'focus',
+    data() {
         return {
             list: [],
+            filters: [],
+            rootUrl:rootUrl
         }
     },
     mounted() {
         this.getList();
     },
-    methods: {
-        add() {
-            this.$router.push('/admin/add');
+    methods:{
+        add(){
+            this.$router.push('/focus/add');
         },
-        refresh() {
+        refresh(){
             this.getList();
         },
         async getList(){
-            let result = await api({url:'/admin/admin', method:'POST'});
+            let result = await api({url:'/admin/focus', method:'POST'});
             this.list = result;
         },
-        addFilter(arr,obj,str,right,error){
-            if(!(_.find(arr,(key)=> key.value === obj[str]))){
-                arr.push({
-                    text:right ? (obj[str] ? right: error) : obj[str],
-                    value:obj[str]
-                });
-            }
-        },
         edit(row) {
-            this.$router.push({path:'/admin/edit', query: { id: row._id }});
+            this.$router.push({path:'/focus/edit', query: { id: row._id }});
         },
         remove(row){
-            this.$confirm(`是否删除【${row.username}】？`, '提示', {
+            this.$confirm(`是否删除【${row.title}】?`, '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
@@ -87,7 +82,7 @@ export default {
             });
         },
         async del(row){
-            let result = await api({url:'/admin/admin/delete',data:{id:row._id},method:'DELETE'});
+            let result = await api({url:'/admin/focus/delete',data:{id:row._id},method:'DELETE'});
             if(result.status === 'ok'){
                 this.$message({showClose: true,message: '删除成功',type: 'success'});
                 this.getList();
@@ -98,6 +93,3 @@ export default {
     }
 }
 </script>
-
-<style lang="css">
-</style>

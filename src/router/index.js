@@ -6,95 +6,95 @@ Vue.use(VueRouter)
 const Index = [
     {
         path: "/",
-        component: require('../components/pages/index')
+        component: require('../views/pages/index')
     },
     {
         path: "/trash",
-        component: require('../components/trash/index')
+        component: require('../views/trash/index')
     },
     {
         path: "/basis",
-        component: require('../components/basis/index')
+        component: require('../views/basis/index')
     }
 ]
 const Category = [
     {
         path: "/category",
-        component: require('../components/category/index')
+        component: require('../views/category/index')
     },
     {
         path: "/category/add",
-        component: require('../components/category/add.vue')
+        component: require('../views/category/add.vue')
     },
     {
         path: "/category/edit",
-        component: require('../components/category/edit.vue')
+        component: require('../views/category/edit.vue')
     }
 ]
 const Article = [
     {
         path: "/article",
-        component: require('../components/article/index')
+        component: require('../views/article/index')
     },
     {
         path: "/article/add",
-        component: require('../components/article/add.vue')
+        component: require('../views/article/add.vue')
     },
     {
         path: "/article/edit",
-        component: require('../components/article/edit.vue')
+        component: require('../views/article/edit.vue')
     }
 ]
 const File = [
     {
         path: "/file",
-        component: require('../components/file')
+        component: require('../views/file')
     },
     {
         path: "/file/add",
-        component: require('../components/file/add')
+        component: require('../views/file/add')
     }
 ]
 const Link = [
     {
         path: '/link',
-        component: require('../components/link')
+        component: require('../views/link')
     },
     {
         path: '/link/add',
-        component: require('../components/link/add')
+        component: require('../views/link/add')
     },
     {
         path: '/link/edit',
-        component: require('../components/link/edit')
+        component: require('../views/link/edit')
     }
 ]
 const Focus = [
     {
         path: '/focus',
-        component: require('../components/focus')
+        component: require('../views/focus')
     },
     {
         path: '/focus/add',
-        component: require('../components/focus/add')
+        component: require('../views/focus/add')
     },
     {
         path: '/focus/edit',
-        component: require('../components/focus/edit')
+        component: require('../views/focus/edit')
     }
 ]
 const Admin = [
     {
         path: '/admin',
-        component: require('../components/admin')
+        component: require('../views/admin')
     },
     {
         path: '/admin/add',
-        component: require('../components/admin/add')
+        component: require('../views/admin/add')
     },
     {
         path: '/admin/edit',
-        component: require('../components/admin/edit')
+        component: require('../views/admin/edit')
     }
 ]
 
@@ -105,20 +105,20 @@ const router = new VueRouter({
     routes: [
         {
             path: "/",
-            component: require('components/index'),
+            component: require('views/index'),
             children: Index.concat(Category, Article, File, Link, Focus, Admin)
         },
         {
             path: "/login",
-            component: require('components/pages/login'),
+            component: require('views/pages/login'),
         }
     ]
 })
 
 router.beforeEach((to, from, next) => {
     //判断当前用户是否登录
-    let token67 = Cookie.get('token67');
-    if(token67){
+    let token = Cookie.get('token');
+    if(token){
         next();
     }else{
         if(to.path === '/login' || to.path === '/reset'){

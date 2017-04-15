@@ -101,6 +101,7 @@
 <script>
 import {fetchApi as api, region, rootUrl} from '../../api'
 import _ from 'lodash'
+
 export default {
     name: 'basis',
     data() {
@@ -156,20 +157,20 @@ export default {
                 this.picList = [{
                     name:'pic',
                     url: rootUrl + this.form.pic
-                }]; 
+                }];
             }
             if(this.form.weixin){
                 this.weixinList = [{
                     name:'weixin',
                     url: rootUrl + this.form.weixin
-                }];    
+                }];
             }
             if(this.form.banner){
                this.bannerList = [{
                     name:'banner',
                     url: rootUrl + this.form.banner
-                }]; 
-            }  
+                }];
+            }
         },
         submit() {
             this.$refs.form.validate((valid) => {
@@ -218,47 +219,47 @@ export default {
         },
         logoRemove(file, fileList) {
             api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
-            this.form.logo = '';
+            this.form = Object.assign({},this.form,{logo:''})
         },
         logoSuccess(response, file, fileList){
             file.id = response.id;
             file.newName = response.name;
             file.path = response.path;
             file.newUrl = response.url;
-            this.form.logo = response.path;
+            this.form = Object.assign({},this.form,{logo:response.path})
         },
         picRemove(file, fileList) {
             api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
-            this.form.pic = '';
+            this.form = Object.assign({},this.form,{pic:''})
         },
         picSuccess(response, file, fileList){
             file.id = response.id;
             file.newName = response.name;
             file.path = response.path;
             file.newUrl = response.url;
-            this.form.pic = response.path;
+            this.form = Object.assign({},this.form,{pic:response.path})
         },
         weixinRemove(file, fileList) {
             api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
-            this.form.weixin = '';
+            this.form = Object.assign({},this.form,{weixin:''})
         },
         weixinSuccess(response, file, fileList){
             file.id = response.id;
             file.newName = response.name;
             file.path = response.path;
             file.newUrl = response.url;
-            this.form.weixin = response.path;
+            this.form = Object.assign({},this.form,{weixin:response.path})
         },
         bannerRemove(file, fileList) {
             api({url:'/admin/file/delete',data:{id:file.id},method:'POST'});
-            this.form.banner = '';
+            this.form = Object.assign({},this.form,{banner:''})
         },
         bannerSuccess(response, file, fileList){
             file.id = response.id;
             file.newName = response.name;
             file.path = response.path;
             file.newUrl = response.url;
-            this.form.banner = response.path;
+            this.form = Object.assign({},this.form,{banner:response.path})
         },
     }
 }

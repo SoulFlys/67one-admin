@@ -13,7 +13,7 @@
         </div>
         <el-table :data="list" border style="width: 100%">
             <el-table-column inline-template label="更新日期" width="150">
-                <span>{{row.meta.updateAt | formatDate}}</span>
+                <span>{{row.updateAt | formatDate}}</span>
             </el-table-column>
             <el-table-column prop="_id" label="_ID" width="200"></el-table-column>
             <el-table-column prop="name" label="栏目" width="120" :filters="catFilters" :filter-method="catFiltersMethod"></el-table-column>
@@ -48,7 +48,7 @@
                 </div>
             </el-table-column>
             <el-table-column inline-template label="创建时间" width="150">
-                <span>{{row.meta.createAt | formatDate}}</span>
+                <span>{{row.createAt | formatDate}}</span>
             </el-table-column>
             <el-table-column label="操作" inline-template align="center">
                 <div>
