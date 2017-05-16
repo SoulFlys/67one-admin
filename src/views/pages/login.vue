@@ -76,9 +76,9 @@ export default {
         async login() {
             let data = _.clone(this.form);
             let result = await api({url:'/admin/admin/login', data:data, method:'post'});
-            if(result.status === 'ok'){
+            if(result.status){
                 let time = this.checked ? '24h' : '2h';
-                Cookie.set('token',JSON.stringify(result.data), { expires: time });
+                Cookie.set('token',JSON.stringify(result.result), { expires: time });
                 this.$router.push('/');
             }else{
                 this.$message({

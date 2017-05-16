@@ -62,8 +62,11 @@ export default {
         },
         async getList(){
             let result = await api({url:'/admin/admin', method:'POST'});
-            // console.log(result[0])
-            this.list = result;
+            if(result.status){
+                this.list = result.result;
+            }else{
+                this.$message({showClose: true,message: '获取失败',type: 'error'});
+            }
         },
         addFilter(arr,obj,str,right,error){
             if(!(_.find(arr,(key)=> key.value === obj[str]))){

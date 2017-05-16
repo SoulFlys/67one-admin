@@ -41,12 +41,12 @@ export default {
         }
     },
     mounted(){
-        let names = JSON.parse(Cookie.get('token67'));
+        let names = JSON.parse(Cookie.get('token'));
         this.name = names.nickname || names.realname || name.username;
     },
     methods:{
         logout(){
-            Cookie.delete('token67');
+            Cookie.delete('token');
             this.$message({
                showClose: true,
                message: '退出成功',
