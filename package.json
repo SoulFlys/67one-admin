@@ -11,7 +11,7 @@
   "dependencies": {
     "axios": "^0.16.1",
     "element-ui": "1.1.6",
-    "lodash": "^4.17.2",
+    "lodash": "^4.17.13",
     "superagent": "^3.3.0",
     "vue": "^2.1.4",
     "vue-cookie": "^1.1.3",
